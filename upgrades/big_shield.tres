@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://be33ag7emjmby"]
+
+[ext_resource type="Texture2D" uid="uid://bg82i505jlyse" path="res://assets/upgrade/big_shield.png" id="1_ke4hv"]
+[ext_resource type="Script" uid="uid://eyjak6sfqhts" path="res://upgrade_data.gd" id="2_mha2s"]
+
+[resource]
+script = ExtResource("2_mha2s")
+id = "big_shield"
+name = "방벽 크기 증가"
+description = "방벽의 크기가 20% 증가합니다."
+image = ExtResource("1_ke4hv")
+metadata/_custom_type_script = "uid://eyjak6sfqhts"

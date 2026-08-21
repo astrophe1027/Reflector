@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://ceandlyuo6f1u"]
+
+[ext_resource type="PackedScene" uid="uid://bgj0m0chtelmx" path="res://base_enemy.tscn" id="1_1vuwy"]
+[ext_resource type="Script" uid="uid://dwlaxokhkx20f" path="res://pink_enemy.gd" id="2_dtkuh"]
+[ext_resource type="Texture2D" uid="uid://dn5aln2w7owoy" path="res://assets/4_1 50px.png" id="3_5yboa"]
+[ext_resource type="Texture2D" uid="uid://qxf82w71xeiy" path="res://assets/4_2 50px.png" id="4_4ba47"]
+[ext_resource type="Texture2D" uid="uid://chciba442d0qb" path="res://assets/4_3 50px.png" id="5_51h03"]
+[ext_resource type="Texture2D" uid="uid://brmxtodif7qm4" path="res://assets/4_4 50px.png" id="6_ig6lo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iey6n"]
+radius = 25.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5yboa"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5yboa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4ba47")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_51h03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ig6lo")
+}],
+"loop": 1,
+"name": &"hitted",
+"speed": 5.0
+}]
+
+[node name="PinkEnemy" unique_id=167456077 instance=ExtResource("1_1vuwy")]
+script = ExtResource("2_dtkuh")
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1020961316]
+shape = SubResource("CircleShape2D_iey6n")
+
+[node name="Polygon2D" parent="." index="3" unique_id=280507021]
+visible = false
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(0, -18, 6, -17, 11, -14, 14, -11, 17, -6, 18, 0, 17, 6, 14, 11, 11, 14, 6, 17, 0, 18, -6, 17, -11, 14, -14, 11, -17, 6, -18, 0, -17, -6, -14, -11, -11, -14, -6, -17)
+
+[node name="AnimatedSprite2D" parent="." index="4" unique_id=1826635805]
+scale = Vector2(1.22, 1.22)
+sprite_frames = SubResource("SpriteFrames_5yboa")
+autoplay = "default"
+frame_progress = 0.5271019

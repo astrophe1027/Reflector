@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5n2c0raacr67"
+path="res://.godot/imported/For Me.wav-4402e994f5820963530647ab1c3a24ad.sample"
+
+[deps]
+
+source_file="res://assets/sound/bgm/For Me.wav"
+dest_files=["res://.godot/imported/For Me.wav-4402e994f5820963530647ab1c3a24ad.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

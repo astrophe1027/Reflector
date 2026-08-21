@@ -1,0 +1,276 @@
+[gd_scene format=3 uid="uid://ci70iu22qeuot"]
+
+[ext_resource type="Script" uid="uid://cg2mn0yhitlq3" path="res://world.gd" id="1_dwbse"]
+[ext_resource type="Script" uid="uid://bw2vx8xa4vx4" path="res://upgrade_manager.gd" id="2_2u3nc"]
+[ext_resource type="PackedScene" uid="uid://cc4p1a23hmmg3" path="res://player.tscn" id="3_gbfbk"]
+[ext_resource type="Script" uid="uid://0oysinufnf2n" path="res://wave_system.gd" id="4_hiqwa"]
+[ext_resource type="PackedScene" uid="uid://d3d781twly0rl" path="res://shield.tscn" id="4_ioo17"]
+[ext_resource type="Script" uid="uid://c7yr0j2tmdewj" path="res://enemy_spawn_timer.gd" id="5_wse8f"]
+[ext_resource type="Script" uid="uid://o7x3wo6pttdg" path="res://ui.gd" id="6_ic0uy"]
+[ext_resource type="Texture2D" uid="uid://cxpl5vq03r2kj" path="res://assets/hpbar_1.png" id="7_gbfbk"]
+[ext_resource type="Shader" uid="uid://6xjdaqp50gdk" path="res://squiggle.gdshader" id="7_wse8f"]
+[ext_resource type="Texture2D" uid="uid://b6d0mckubfp1x" path="res://assets/expbar_01.png" id="8_ic0uy"]
+[ext_resource type="Texture2D" uid="uid://j35t16oy2b8b" path="res://assets/hpbar_2.png" id="8_ioo17"]
+[ext_resource type="Texture2D" uid="uid://cusn8fabmk36v" path="res://assets/expbar_2.png" id="8_wse8f"]
+[ext_resource type="Texture2D" uid="uid://0bwgtx3bdaku" path="res://assets/shieldbar_2.png" id="9_2o6r5"]
+[ext_resource type="FontFile" uid="uid://btkv3amgw8c3e" path="res://assets/esamanru Medium.ttf" id="10_26xuy"]
+[ext_resource type="Texture2D" uid="uid://ggkp6nihwq2o" path="res://assets/hpbar_3.png" id="11_k3n1d"]
+[ext_resource type="FontFile" uid="uid://crkl0amgph2ob" path="res://assets/esamanru Bold.ttf" id="13_ikiii"]
+[ext_resource type="AudioStream" uid="uid://dhn5uu5qun628" path="res://assets/sound/level_up.wav" id="14_70uel"]
+[ext_resource type="AudioStream" uid="uid://bjasu6dhlj8yi" path="res://assets/sound/bgm/Three Red Hearts - Go (No Vocal).ogg" id="14_hiqwa"]
+[ext_resource type="Script" uid="uid://dwhefgy2rsj4n" path="res://camera_2d.gd" id="17_bc84e"]
+[ext_resource type="PackedScene" uid="uid://cc3jb5ut7mk8n" path="res://upgrade_ui.tscn" id="17_udxuc"]
+
+[sub_resource type="Shader" id="Shader_lquwl"]
+code = "shader_type canvas_item;
+
+// ⚠️ render_mode에 world_vertex_coords를 추가하여 월드 좌표계를 기준으로 삼습니다.
+render_mode world_vertex_coords;
+
+uniform vec2 grid_size = vec2(100.0, 100.0); // 격자 한 칸의 크기
+uniform vec4 grid_color : source_color = vec4(1.0, 1.0, 1.0, 0.1); // 격자 색상 및 투명도
+uniform float line_thickness = 1.0; // 선 두께
+
+varying vec2 world_pos;
+
+void vertex() {
+    // 버텍스(정점) 단계에서 게임 월드의 실제 좌표를 변수에 저장합니다.
+    world_pos = VERTEX;
+}
+
+void fragment() {
+    // 화면 좌표(FRAGCOORD) 대신, 카메라 움직임이 반영된 월드 좌표(world_pos)를 사용합니다.
+    vec2 grid = mod(world_pos, grid_size);
+    
+    // Y축이 뒤집히는 물리적 현상을 보정하기 위한 안전장치
+    if (grid.x < 0.0) grid.x += grid_size.x;
+    if (grid.y < 0.0) grid.y += grid_size.y;
+
+    // 선 두께 경계선 처리
+    if (grid.x < line_thickness || grid.y < line_thickness) {
+        COLOR = grid_color;
+    } else {
+        COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+shader = SubResource("Shader_lquwl")
+shader_parameter/grid_size = Vector2(100, 100)
+shader_parameter/grid_color = Color(1, 1, 1, 0.1)
+shader_parameter/line_thickness = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wse8f"]
+frequency = 0.004
+offset = Vector3(1000, 0, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ic0uy"]
+noise = SubResource("FastNoiseLite_wse8f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k3n1d"]
+shader = ExtResource("7_wse8f")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 1.0
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_ic0uy")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ic0uy"]
+frequency = 0.004
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2o6r5"]
+noise = SubResource("FastNoiseLite_ic0uy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_70uel"]
+shader = ExtResource("7_wse8f")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 0.45
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_2o6r5")
+
+[sub_resource type="LabelSettings" id="LabelSettings_wse8f"]
+font = ExtResource("10_26xuy")
+font_size = 21
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2o6r5"]
+frequency = 0.004
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k3n1d"]
+noise = SubResource("FastNoiseLite_2o6r5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ic0uy"]
+shader = ExtResource("7_wse8f")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 0.605
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_k3n1d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_iey6n"]
+font = ExtResource("13_ikiii")
+font_size = 23
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udxuc"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="World" type="Node2D" unique_id=1777072767 groups=["World"]]
+script = ExtResource("1_dwbse")
+
+[node name="UpgradeManager" type="Node" parent="." unique_id=833286664 groups=["UpgradeManager"]]
+script = ExtResource("2_2u3nc")
+
+[node name="WaveSystem" type="Node" parent="." unique_id=799009766]
+script = ExtResource("4_hiqwa")
+
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1163449815]
+one_shot = true
+autostart = true
+script = ExtResource("5_wse8f")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1137102446]
+material = SubResource("ShaderMaterial_1bvp3")
+offset_right = 2500.0
+offset_bottom = 2500.0
+metadata/_edit_lock_ = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=349129271]
+script = ExtResource("6_ic0uy")
+
+[node name="shieldBar" type="TextureProgressBar" parent="UI" unique_id=1485464006]
+material = SubResource("ShaderMaterial_k3n1d")
+offset_left = 25.0
+offset_top = 154.0
+offset_right = 270.0
+offset_bottom = 224.0
+step = 0.01
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("8_ic0uy")
+texture_progress = ExtResource("9_2o6r5")
+
+[node name="ExpBar" type="TextureProgressBar" parent="UI" unique_id=74516104]
+material = SubResource("ShaderMaterial_k3n1d")
+offset_left = 24.0
+offset_top = 100.0
+offset_right = 269.0
+offset_bottom = 170.0
+nine_patch_stretch = true
+texture_under = ExtResource("8_ic0uy")
+texture_progress = ExtResource("8_wse8f")
+
+[node name="ExpLabel" type="Label" parent="UI" unique_id=1936037072]
+material = SubResource("ShaderMaterial_70uel")
+offset_left = 46.0
+offset_top = 112.0
+offset_right = 157.0
+offset_bottom = 154.0
+text = "0/100"
+label_settings = SubResource("LabelSettings_wse8f")
+
+[node name="HpBar" type="TextureProgressBar" parent="UI" unique_id=1250142984]
+material = SubResource("ShaderMaterial_ic0uy")
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 273.0
+offset_bottom = 98.0
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_gbfbk")
+texture_over = ExtResource("11_k3n1d")
+texture_progress = ExtResource("8_ioo17")
+
+[node name="HpLabel" type="Label" parent="UI" unique_id=1275313809]
+material = SubResource("ShaderMaterial_70uel")
+offset_left = 49.0
+offset_top = 45.0
+offset_right = 274.0
+offset_bottom = 109.0
+text = "100/100"
+label_settings = SubResource("LabelSettings_wse8f")
+
+[node name="HitEffect" type="ColorRect" parent="UI" unique_id=1925419814]
+offset_right = 1198.0
+offset_bottom = 706.0
+mouse_filter = 2
+color = Color(1, 0, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="TimeLabel" type="Label" parent="UI" unique_id=377406416]
+offset_left = 40.0
+offset_top = 207.0
+offset_right = 201.0
+offset_bottom = 240.0
+text = "지난 시간: 0초"
+label_settings = SubResource("LabelSettings_iey6n")
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="UI" unique_id=1286692193]
+visible = false
+offset_left = 238.0
+offset_top = 449.0
+offset_right = 278.0
+offset_bottom = 489.0
+joystick_mode = 1
+joystick_size = 150.0
+tip_size = 150.0
+action_left = &"move_left"
+action_right = &"move_right"
+action_up = &"move_up"
+action_down = &"move_down"
+
+[node name="VirtualJoystick2" type="VirtualJoystick" parent="UI" unique_id=736100917]
+visible = false
+offset_left = 847.0
+offset_top = 453.0
+offset_right = 887.0
+offset_bottom = 493.0
+joystick_mode = 1
+joystick_size = 150.0
+tip_size = 150.0
+action_left = &"shield_left"
+action_right = &"shield_right"
+action_up = &"shield_up"
+action_down = &"shield_down"
+
+[node name="BossBar" type="ProgressBar" parent="UI" unique_id=868697964]
+offset_left = 408.0
+offset_top = 47.0
+offset_right = 762.99976
+offset_bottom = 83.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_udxuc")
+value = 10.0
+
+[node name="LevelLabel" type="Label" parent="UI" unique_id=1241888490]
+offset_left = 45.0
+offset_top = 245.0
+offset_right = 206.0
+offset_bottom = 278.0
+text = "1Lv"
+label_settings = SubResource("LabelSettings_iey6n")
+
+[node name="Player" parent="." unique_id=1642113600 groups=["Player"] instance=ExtResource("3_gbfbk")]
+position = Vector2(1250, 1250)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Shield" parent="Player" unique_id=45481210 instance=ExtResource("4_ioo17")]
+visible = false
+position = Vector2(-713, -987)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=521078623]
+position = Vector2(1295, 1361)
+script = ExtResource("17_bc84e")
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=2110111779]
+stream = ExtResource("14_hiqwa")
+volume_db = -5.0
+autoplay = true
+
+[node name="LevelUp" type="AudioStreamPlayer" parent="." unique_id=2053627712]
+stream = ExtResource("14_70uel")
+
+[node name="UpgradeUI" parent="." unique_id=1521495284 instance=ExtResource("17_udxuc")]
+visible = false
+
+[connection signal="exp_changed" from="." to="UI" method="_on_world_exp_changed"]
+[connection signal="level_up" from="." to="UpgradeManager" method="trigger_level_up"]
+[connection signal="health_changed" from="Player" to="UI" method="_on_player_health_changed"]
+[connection signal="hit" from="Player" to="UI" method="_on_player_hit"]
+[connection signal="area_entered" from="Player/Shield" to="Player/Shield" method="_on_area_entered"]

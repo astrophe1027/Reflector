@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://d3skpotd0w7t2"]
+
+[ext_resource type="Texture2D" uid="uid://bxs5fmhft5yv0" path="res://assets/upgrade/dodging_exp.png" id="1_vmcsb"]
+[ext_resource type="Script" uid="uid://eyjak6sfqhts" path="res://upgrade_data.gd" id="2_ba0g4"]
+
+[resource]
+script = ExtResource("2_ba0g4")
+id = "dodging_exp"
+tier = 1
+name = "호율적인 회피"
+description = "적 총알을 회피할시 소량의 경험치를 흭득합니다."
+is_one_time = true
+image = ExtResource("1_vmcsb")
+metadata/_custom_type_script = "uid://eyjak6sfqhts"

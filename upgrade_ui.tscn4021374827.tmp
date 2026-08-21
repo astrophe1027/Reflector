@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cc3jb5ut7mk8n"]
+
+[ext_resource type="Script" uid="uid://dyjg10rq5l5ju" path="res://upgrade_ui.gd" id="1_hherc"]
+[ext_resource type="PackedScene" uid="uid://ci864x6cuwjpf" path="res://card.tscn" id="2_1wvqi"]
+
+[node name="UpgradeUI" type="CanvasLayer" unique_id=409033363]
+process_mode = 3
+script = ExtResource("1_hherc")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1793789583]
+offset_right = 1295.0
+offset_bottom = 712.0
+color = Color(0, 0, 0, 0.30588236)
+
+[node name="Cards" type="Control" parent="." unique_id=1984604399]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Card" parent="Cards" unique_id=1309833882 instance=ExtResource("2_1wvqi")]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 100.0
+offset_right = 390.0
+offset_bottom = 500.0
+
+[node name="Card2" parent="Cards" unique_id=1270819559 instance=ExtResource("2_1wvqi")]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 100.0
+offset_right = 710.0
+offset_bottom = 500.0
+
+[node name="Card3" parent="Cards" unique_id=1991374486 instance=ExtResource("2_1wvqi")]
+layout_mode = 0
+offset_left = 780.0
+offset_top = 100.0
+offset_right = 1030.0
+offset_bottom = 500.0

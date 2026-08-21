@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://douimv8gh0yer"]
+
+[ext_resource type="Script" uid="uid://eyjak6sfqhts" path="res://upgrade_data.gd" id="1_kqmip"]
+[ext_resource type="Texture2D" uid="uid://bh3uosq62xaa4" path="res://assets/upgrade/revolving_bullet.png" id="1_ro81w"]
+
+[resource]
+script = ExtResource("1_kqmip")
+id = "revolving_bullet"
+tier = 2
+name = "회전 탄환"
+description = "탄막 반사시 30% 확률로 일정시간 후 적을 향해 날아가는 공전 총알이 생성됩니다."
+is_one_time = true
+image = ExtResource("1_ro81w")
+metadata/_custom_type_script = "uid://eyjak6sfqhts"

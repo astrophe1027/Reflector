@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ci70iu22qeuot"]
+
+[ext_resource type="PackedScene" uid="uid://cc4p1a23hmmg3" path="res://player.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://d3d781twly0rl" path="res://shield.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bikv4642qtyrd" path="res://red_bullet.tscn" id="3_h2yge"]
+
+[node name="Main" type="Node" unique_id=1260042502]
+
+[node name="Player" parent="." unique_id=1642113600 instance=ExtResource("1_0xm2m")]
+unique_name_in_owner = true
+position = Vector2(493, 331)
+
+[node name="Shield" parent="." unique_id=45481210 instance=ExtResource("2_h2yge")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(537, 263)
+
+[node name="RedBullet" parent="." unique_id=15880832 instance=ExtResource("3_h2yge")]
+position = Vector2(180, 186)

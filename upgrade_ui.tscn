@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cc3jb5ut7mk8n"]
+
+[ext_resource type="Script" uid="uid://dyjg10rq5l5ju" path="res://upgrade_ui.gd" id="1_hherc"]
+[ext_resource type="PackedScene" uid="uid://ci864x6cuwjpf" path="res://card.tscn" id="2_1wvqi"]
+[ext_resource type="AudioStream" uid="uid://cn1bqetgbmy82" path="res://assets/sound/revolving_bullet_fire.wav" id="3_1wvqi"]
+[ext_resource type="Shader" uid="uid://6xjdaqp50gdk" path="res://squiggle.gdshader" id="3_6h2i3"]
+[ext_resource type="Texture2D" uid="uid://cb7se6s5tps6b" path="res://assets/reroll_button.png" id="4_1gyxb"]
+[ext_resource type="FontFile" uid="uid://crkl0amgph2ob" path="res://assets/font/esamanru Bold.ttf" id="5_kfjve"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b4rk6"]
+frequency = 0.003
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6lcat"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_b4rk6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bkakb"]
+shader = ExtResource("3_6h2i3")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 0.3
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_6lcat")
+
+[sub_resource type="LabelSettings" id="LabelSettings_iey6n"]
+font = ExtResource("5_kfjve")
+font_size = 26
+
+[node name="UpgradeUI" type="CanvasLayer" unique_id=409033363]
+process_mode = 3
+script = ExtResource("1_hherc")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1793789583]
+offset_right = 1295.0
+offset_bottom = 712.0
+color = Color(0, 0, 0, 0.30588236)
+
+[node name="Cards" type="Control" parent="." unique_id=1984604399]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Card" parent="Cards" unique_id=1309833882 instance=ExtResource("2_1wvqi")]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 100.0
+offset_right = 390.0
+offset_bottom = 500.0
+
+[node name="Card2" parent="Cards" unique_id=1270819559 instance=ExtResource("2_1wvqi")]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 100.0
+offset_right = 710.0
+offset_bottom = 500.0
+
+[node name="Card3" parent="Cards" unique_id=1991374486 instance=ExtResource("2_1wvqi")]
+layout_mode = 0
+offset_left = 780.0
+offset_top = 100.0
+offset_right = 1030.0
+offset_bottom = 500.0
+
+[node name="Reroll" type="TextureButton" parent="." unique_id=1892773276]
+visible = false
+material = SubResource("ShaderMaterial_bkakb")
+offset_left = 501.0
+offset_top = 543.0
+offset_right = 681.0
+offset_bottom = 623.0
+texture_normal = ExtResource("4_1gyxb")
+
+[node name="Label" type="Label" parent="Reroll" unique_id=1562860697]
+use_parent_material = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 162.0
+offset_bottom = 54.0
+text = "다시 뽑기"
+label_settings = SubResource("LabelSettings_iey6n")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=829753666]
+stream = ExtResource("3_1wvqi")
+
+[connection signal="pressed" from="Reroll" to="." method="_on_texture_button_pressed"]

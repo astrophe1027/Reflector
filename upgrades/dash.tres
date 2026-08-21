@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://wx15e2sn48u2"]
+
+[ext_resource type="Texture2D" uid="uid://l4o84wp6l3fn" path="res://assets/upgrade/dash.png" id="1_4xai1"]
+[ext_resource type="Script" uid="uid://eyjak6sfqhts" path="res://upgrade_data.gd" id="2_84wdq"]
+
+[resource]
+script = ExtResource("2_84wdq")
+id = "dash"
+tier = 1
+name = "데쉬"
+description = "쉬프트를 눌러 방패 게이지 일부를 사용해 전방으로 짧게 돌진합니다."
+is_one_time = true
+image = ExtResource("1_4xai1")
+metadata/_custom_type_script = "uid://eyjak6sfqhts"

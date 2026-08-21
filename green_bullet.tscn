@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://c5xtnwb8rmx7d"]
+
+[ext_resource type="PackedScene" uid="uid://bikv4642qtyrd" path="res://base_bullet.tscn" id="1_hp8bn"]
+[ext_resource type="Script" uid="uid://b2p2s7okn0swn" path="res://green_bullet.gd" id="2_7u1gn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_abktt"]
+radius = 12.0
+
+[sub_resource type="Curve" id="Curve_7u1gn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7u1gn"]
+curve = SubResource("Curve_7u1gn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7u1gn"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_7u1gn")
+color = Color(0, 1, 0, 0.7019608)
+
+[node name="GreenBullet" unique_id=15880832 instance=ExtResource("1_hp8bn")]
+position = Vector2(147, 315)
+script = ExtResource("2_7u1gn")
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=1686537205]
+shape = SubResource("CircleShape2D_abktt")
+
+[node name="Polygon2D" parent="." index="1" unique_id=1354813491]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(0, -12, 6, -10, 10, -6, 12, 0, 10, 6, 6, 10, 0, 12, -6, 10, -10, 6, -12, 0, -10, -6, -6, -10)
+
+[node name="GPUParticles2D" parent="." index="2" unique_id=1235616472]
+amount = 30
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_7u1gn")

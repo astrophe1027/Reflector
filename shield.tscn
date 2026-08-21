@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://d3d781twly0rl"]
+
+[ext_resource type="Script" uid="uid://c5v17pdds0tac" path="res://shield.gd" id="1_vuocu"]
+[ext_resource type="AudioStream" uid="uid://d3i3gdn8ywb11" path="res://assets/sound/enemy_hit.wav" id="2_dmnlx"]
+[ext_resource type="Texture2D" uid="uid://c4ls3f03rsoob" path="res://assets/shield.png" id="3_dmnlx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iey6n"]
+size = Vector2(12, 95)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_il2jm"]
+
+[sub_resource type="Curve" id="Curve_il2jm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Shield" type="Area2D" unique_id=969396094]
+script = ExtResource("1_vuocu")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1825602379]
+shape = SubResource("RectangleShape2D_iey6n")
+disabled = true
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1550173155]
+polygon = PackedVector2Array(-6, -47, 6, -47, 6, 47, -6, 47)
+
+[node name="Reflect" type="AudioStreamPlayer" parent="." unique_id=1361972433]
+stream = ExtResource("2_dmnlx")
+volume_db = 8.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1165677885]
+visible = false
+material = SubResource("CanvasItemMaterial_il2jm")
+scale = Vector2(0.615, 0.49499997)
+texture = ExtResource("3_dmnlx")
+
+[node name="Particle" type="CPUParticles2D" parent="." unique_id=2063468406]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+damping_min = 300.0
+damping_max = 500.0
+scale_amount_min = 10.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_il2jm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

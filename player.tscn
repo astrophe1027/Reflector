@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://cc4p1a23hmmg3"]
+
+[ext_resource type="Script" uid="uid://8bbp4ytpjof1" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Shader" uid="uid://6xjdaqp50gdk" path="res://squiggle.gdshader" id="2_1jxqw"]
+[ext_resource type="Texture2D" uid="uid://ovunj0rijofy" path="res://assets/player.png" id="3_dw050"]
+[ext_resource type="AudioStream" uid="uid://dajj0whyveby" path="res://assets/sound/coin1.wav" id="3_i3pqv"]
+[ext_resource type="AudioStream" uid="uid://b6xeau5ob7cjs" path="res://assets/sound/coin2.wav" id="4_2hs0m"]
+[ext_resource type="AudioStream" uid="uid://d3i3gdn8ywb11" path="res://assets/sound/enemy_hit.wav" id="4_hqtel"]
+[ext_resource type="AudioStream" uid="uid://by0oxy8xq4k4q" path="res://assets/sound/Bubble heavy 2.wav" id="5_sweqy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iey6n"]
+radius = 12.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bi6wa"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e57ba"]
+noise = SubResource("FastNoiseLite_bi6wa")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iey6n"]
+shader = ExtResource("2_1jxqw")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 2.0
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_e57ba")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bi6wa"]
+radius = 65.0
+
+[sub_resource type="Curve" id="Curve_sweqy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2hs0m"]
+curve = SubResource("Curve_sweqy")
+
+[sub_resource type="Curve" id="Curve_1jxqw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.49438208), -0.051320978, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dw050"]
+curve = SubResource("Curve_1jxqw")
+
+[sub_resource type="Curve" id="Curve_b26j0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.61292577, 0.61517787), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_n7ghd"]
+resource_local_to_scene = true
+curve = SubResource("Curve_b26j0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nvl01"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+radial_velocity_min = 29.999977
+radial_velocity_max = 299.99997
+radial_velocity_curve = SubResource("CurveTexture_dw050")
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_n7ghd")
+alpha_curve = SubResource("CurveTexture_2hs0m")
+
+[node name="Player" type="Area2D" unique_id=1642113600]
+script = ExtResource("1_4flbx")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=296201737]
+shape = SubResource("CircleShape2D_iey6n")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1592529740]
+visible = false
+polygon = PackedVector2Array(-4, -14, 4, -14, 10, -11, 15, -3, 14, 5, 10, 11, 4, 15, -6, 14, -12, 8, -15, 0, -13, -8)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=736846158]
+material = SubResource("ShaderMaterial_iey6n")
+position = Vector2(0, 1)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("3_dw050")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=927911455]
+scale = Vector2(0.8, 0.8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=74831461]
+shape = SubResource("CircleShape2D_bi6wa")
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D" unique_id=697002187]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(0, -64, 33, -56, 56, -33, 65, 0, 57, 33, 32, 57, 0, 65, -32, 57, -56, 33, -65, 0, -56, -32, -33, -55)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=713094945]
+visible = false
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_nvl01")
+
+[node name="Coin" type="AudioStreamPlayer" parent="." unique_id=1554864963]
+stream = ExtResource("3_i3pqv")
+volume_db = -1.677
+pitch_scale = 0.9
+
+[node name="Coin2" type="AudioStreamPlayer" parent="." unique_id=971811143]
+stream = ExtResource("4_2hs0m")
+
+[node name="Bullet" type="AudioStreamPlayer" parent="." unique_id=1181580132]
+stream = ExtResource("4_hqtel")
+pitch_scale = 1.2
+
+[node name="Hit" type="AudioStreamPlayer" parent="." unique_id=794753430]
+stream = ExtResource("5_sweqy")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

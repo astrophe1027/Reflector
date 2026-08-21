@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://by0x3ld78w21i"]
+
+[sub_resource type="Curve" id="Curve_b8p28"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3m7yh"]
+curve = SubResource("Curve_b8p28")
+
+[sub_resource type="Curve" id="Curve_2cb7w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.051320978, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_up7bd"]
+curve = SubResource("Curve_2cb7w")
+
+[sub_resource type="Curve" id="Curve_3m7yh"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.61292577, 0.61517787), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_6qx4q"]
+resource_local_to_scene = true
+curve = SubResource("Curve_3m7yh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g7b7a"]
+resource_local_to_scene = true
+radial_velocity_min = 39.999977
+radial_velocity_max = 129.99997
+radial_velocity_curve = SubResource("CurveTexture_up7bd")
+gravity = Vector3(0, 0, 0)
+scale_min = 12.0
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_6qx4q")
+alpha_curve = SubResource("CurveTexture_3m7yh")
+
+[sub_resource type="GDScript" id="GDScript_3m7yh"]
+script/source = "extends GPUParticles2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	emitting = true
+	await get_tree().create_timer(lifetime).timeout
+	queue_free()
+"
+
+[node name="DeathParticle" type="GPUParticles2D" unique_id=88994663]
+visibility_layer = 512
+position = Vector2(173, 106)
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_g7b7a")
+script = SubResource("GDScript_3m7yh")

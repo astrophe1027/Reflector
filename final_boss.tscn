@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://5hi0i04q0pu"]
+
+[ext_resource type="PackedScene" uid="uid://bgj0m0chtelmx" path="res://base_enemy.tscn" id="1_xooy5"]
+[ext_resource type="Script" uid="uid://mg82e72t41ye" path="res://final_boss.gd" id="2_ifitu"]
+[ext_resource type="AudioStream" uid="uid://cmiwue6srh2bw" path="res://assets/sound/laser gun.wav" id="3_0otar"]
+[ext_resource type="Texture2D" uid="uid://ovunj0rijofy" path="res://assets/player.png" id="3_il0sp"]
+[ext_resource type="Texture2D" uid="uid://c56ip5atvdhqq" path="res://assets/boss/boss_13.png" id="4_xkc3p"]
+[ext_resource type="Texture2D" uid="uid://cfwakfptmn0bp" path="res://assets/boss/boss_00.png" id="5_31une"]
+[ext_resource type="Texture2D" uid="uid://c3x6kq645v12i" path="res://assets/boss/boss_01.png" id="6_1xog8"]
+[ext_resource type="Texture2D" uid="uid://d3tfgaxupvhia" path="res://assets/boss/boss_02.png" id="7_4slbc"]
+[ext_resource type="Texture2D" uid="uid://btbtqxe4sjc1l" path="res://assets/boss/boss_03.png" id="8_6fjyu"]
+[ext_resource type="Texture2D" uid="uid://2474aqn33re6" path="res://assets/boss/boss_04.png" id="9_8deno"]
+[ext_resource type="Texture2D" uid="uid://bksd0l8jgca3r" path="res://assets/boss/boss_05.png" id="10_otnqk"]
+[ext_resource type="Texture2D" uid="uid://7i3o8oxpuh68" path="res://assets/boss/boss_06.png" id="11_gvxet"]
+[ext_resource type="Texture2D" uid="uid://djg17ff72vfst" path="res://assets/boss/boss_07.png" id="12_a4me7"]
+[ext_resource type="Texture2D" uid="uid://xlb3m73jg3f0" path="res://assets/boss/boss_08.png" id="13_fqonk"]
+[ext_resource type="Texture2D" uid="uid://vs4dackb0knd" path="res://assets/boss/boss_09.png" id="14_i43dy"]
+[ext_resource type="Texture2D" uid="uid://7r15wjs6odvn" path="res://assets/boss/boss_10.png" id="15_lru5d"]
+[ext_resource type="Texture2D" uid="uid://cgyeeogpbdycr" path="res://assets/boss/boss_11.png" id="16_74jqo"]
+[ext_resource type="Texture2D" uid="uid://bcd38uui12u4g" path="res://assets/boss/boss_12.png" id="17_v2s8v"]
+[ext_resource type="Texture2D" uid="uid://ddu7f22x76cxq" path="res://assets/boss/boss_14.png" id="18_8deno"]
+[ext_resource type="Texture2D" uid="uid://dnothmo2a87rk" path="res://assets/boss/boss_15.png" id="19_otnqk"]
+[ext_resource type="Texture2D" uid="uid://b1l17kvej3nxv" path="res://assets/boss/boss_16.png" id="20_gvxet"]
+[ext_resource type="Texture2D" uid="uid://bsq74vssuleyn" path="res://assets/boss/boss_17.png" id="21_a4me7"]
+[ext_resource type="Texture2D" uid="uid://bycwek2qq07aj" path="res://assets/boss/boss_18.png" id="22_fqonk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ifitu"]
+radius = 45.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6h2i3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_il0sp")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_il0sp")
+}],
+"loop": 1,
+"name": &"hitted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_fqonk")
+}],
+"loop": 1,
+"name": &"phase1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_31une")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1xog8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4slbc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_6fjyu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_8deno")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_otnqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gvxet")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_a4me7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_fqonk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_i43dy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_lru5d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_74jqo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_v2s8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xkc3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_8deno")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_otnqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_gvxet")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_a4me7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_fqonk")
+}],
+"loop": 0,
+"name": &"start",
+"speed": 5.0
+}]
+
+[node name="FinalBoss" unique_id=167456077 groups=["Boss"] instance=ExtResource("1_xooy5")]
+script = ExtResource("2_ifitu")
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1020961316]
+shape = SubResource("CircleShape2D_ifitu")
+
+[node name="Polygon2D" parent="." index="3" unique_id=280507021]
+scale = Vector2(2.44, 2.44)
+
+[node name="AnimatedSprite2D" parent="." index="4" unique_id=1826635805]
+scale = Vector2(1.87, 1.87)
+sprite_frames = SubResource("SpriteFrames_6h2i3")
+animation = &"start"
+autoplay = "default"
+frame = 18
+frame_progress = 1.0
+
+[node name="Fire2" type="AudioStreamPlayer" parent="." index="6" unique_id=1496572591]
+stream = ExtResource("3_0otar")
+volume_db = -5.871
+pitch_scale = 0.8

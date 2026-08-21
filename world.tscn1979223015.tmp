@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://ci70iu22qeuot"]
+
+[ext_resource type="Script" uid="uid://cg2mn0yhitlq3" path="res://world.gd" id="1_dwbse"]
+[ext_resource type="PackedScene" uid="uid://txq4ei5pxdes" path="res://yellow_bullet.tscn" id="2_pkg7o"]
+[ext_resource type="PackedScene" uid="uid://cc4p1a23hmmg3" path="res://player.tscn" id="3_gbfbk"]
+[ext_resource type="PackedScene" uid="uid://d3d781twly0rl" path="res://shield.tscn" id="4_ioo17"]
+[ext_resource type="Script" uid="uid://c7yr0j2tmdewj" path="res://enemy_spawn_timer.gd" id="5_wse8f"]
+[ext_resource type="Script" uid="uid://o7x3wo6pttdg" path="res://ui.gd" id="6_ic0uy"]
+
+[sub_resource type="Shader" id="Shader_lquwl"]
+code = "shader_type canvas_item;
+
+// ⚠️ render_mode에 world_vertex_coords를 추가하여 월드 좌표계를 기준으로 삼습니다.
+render_mode world_vertex_coords;
+
+uniform vec2 grid_size = vec2(100.0, 100.0); // 격자 한 칸의 크기
+uniform vec4 grid_color : source_color = vec4(1.0, 1.0, 1.0, 0.1); // 격자 색상 및 투명도
+uniform float line_thickness = 1.0; // 선 두께
+
+varying vec2 world_pos;
+
+void vertex() {
+    // 버텍스(정점) 단계에서 게임 월드의 실제 좌표를 변수에 저장합니다.
+    world_pos = VERTEX;
+}
+
+void fragment() {
+    // 화면 좌표(FRAGCOORD) 대신, 카메라 움직임이 반영된 월드 좌표(world_pos)를 사용합니다.
+    vec2 grid = mod(world_pos, grid_size);
+    
+    // Y축이 뒤집히는 물리적 현상을 보정하기 위한 안전장치
+    if (grid.x < 0.0) grid.x += grid_size.x;
+    if (grid.y < 0.0) grid.y += grid_size.y;
+
+    // 선 두께 경계선 처리
+    if (grid.x < line_thickness || grid.y < line_thickness) {
+        COLOR = grid_color;
+    } else {
+        COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+shader = SubResource("Shader_lquwl")
+shader_parameter/grid_size = Vector2(100, 100)
+shader_parameter/grid_color = Color(1, 1, 1, 0.1)
+shader_parameter/line_thickness = 1.0
+
+[sub_resource type="Theme" id="Theme_lquwl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
+bg_color = Color(1, 0.21176471, 0.21176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_iey6n"]
+font_size = 23
+
+[node name="World" type="Node" unique_id=1260042502 groups=["World"]]
+script = ExtResource("1_dwbse")
+
+[node name="YellowBullet4" parent="." unique_id=15880832 instance=ExtResource("2_pkg7o")]
+position = Vector2(840, 1129)
+
+[node name="YellowBullet2" parent="." unique_id=2095340241 instance=ExtResource("2_pkg7o")]
+position = Vector2(980.9999, 990.9999)
+rotation = 0.6789331
+
+[node name="YellowBullet" parent="." unique_id=1691175361 instance=ExtResource("2_pkg7o")]
+position = Vector2(992.99994, 1448)
+rotation = -0.56548667
+
+[node name="Player" parent="." unique_id=1642113600 groups=["Player"] instance=ExtResource("3_gbfbk")]
+position = Vector2(1250, 1250)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Shield" parent="Player" unique_id=45481210 instance=ExtResource("4_ioo17")]
+visible = false
+position = Vector2(-713, -987)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1137102446]
+material = SubResource("ShaderMaterial_1bvp3")
+offset_right = 2500.0
+offset_bottom = 2500.0
+metadata/_edit_lock_ = true
+
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1163449815]
+wait_time = 5.0
+one_shot = true
+autostart = true
+script = ExtResource("5_wse8f")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=349129271]
+script = ExtResource("6_ic0uy")
+
+[node name="HpBar" type="ProgressBar" parent="UI" unique_id=1353378017]
+offset_left = 45.0
+offset_top = 41.0
+offset_right = 258.0
+offset_bottom = 73.0
+theme = SubResource("Theme_lquwl")
+theme_override_styles/background = SubResource("StyleBoxFlat_272bh")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7mycd")
+value = 100.0
+show_percentage = false
+
+[node name="HitEffect" type="ColorRect" parent="UI" unique_id=1925419814]
+visible = false
+offset_right = 1005.0
+offset_bottom = 706.0
+color = Color(1, 0, 0, 0.49019608)
+
+[node name="HpLabel" type="Label" parent="UI" unique_id=1275313809]
+offset_left = 51.0
+offset_top = 44.0
+offset_right = 121.0
+offset_bottom = 67.0
+text = "100 / 100"
+
+[node name="TimeLabel" type="Label" parent="UI" unique_id=377406416]
+offset_left = 45.0
+offset_top = 90.0
+offset_right = 191.0
+offset_bottom = 123.0
+text = "지난 시간: 0초"
+label_settings = SubResource("LabelSettings_iey6n")
+
+[node name="YellowBullet3" parent="." unique_id=1568413577 instance=ExtResource("2_pkg7o")]
+position = Vector2(1621.9998, 1291)
+rotation = 3.0560715
+
+[node name="YellowBullet7" parent="." unique_id=2063641654 instance=ExtResource("2_pkg7o")]
+position = Vector2(1305.9999, 1442.9999)
+rotation = 2.0367992
+scale = Vector2(0.9999999, 0.9999999)
+
+[node name="YellowBullet6" parent="." unique_id=632701355 instance=ExtResource("2_pkg7o")]
+position = Vector2(1247, 967.0001)
+rotation = 1.3578662
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="YellowBullet5" parent="." unique_id=586843661 instance=ExtResource("2_pkg7o")]
+position = Vector2(1559.9999, 1015.0001)
+rotation = 2.1502457
+
+[connection signal="health_changed" from="Player" to="UI" method="_on_player_health_changed"]
+[connection signal="hit" from="Player" to="UI" method="_on_player_hit"]
+[connection signal="area_entered" from="Player/Shield" to="Player/Shield" method="_on_area_entered"]

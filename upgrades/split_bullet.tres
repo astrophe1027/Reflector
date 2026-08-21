@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://sbh14f7v6jds"]
+
+[ext_resource type="Texture2D" uid="uid://dl2bjqgfse5je" path="res://assets/upgrade/split_bullet.png" id="1_fukit"]
+[ext_resource type="Script" uid="uid://eyjak6sfqhts" path="res://upgrade_data.gd" id="2_4eepo"]
+
+[resource]
+script = ExtResource("2_4eepo")
+id = "split_bullet"
+tier = 2
+name = "총알 분열"
+description = "탄환 반사시 30% 확률로 총알이 3갈래로 갈라져 나갑니다."
+is_one_time = true
+image = ExtResource("1_fukit")
+metadata/_custom_type_script = "uid://eyjak6sfqhts"

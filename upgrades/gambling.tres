@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://dmcsx8l5w66ux"]
+
+[ext_resource type="Texture2D" uid="uid://dbwch2m017ks2" path="res://assets/upgrade/gambling.png" id="1_xroyc"]
+[ext_resource type="Script" uid="uid://eyjak6sfqhts" path="res://upgrade_data.gd" id="2_0bh08"]
+
+[resource]
+script = ExtResource("2_0bh08")
+id = "gambling"
+tier = 1
+name = "도박"
+description = "30% 확률로 여러 스텟을 대폭 상승시킵니다.
+하지만 실패시 즉사합니다."
+is_one_time = true
+image = ExtResource("1_xroyc")
+metadata/_custom_type_script = "uid://eyjak6sfqhts"

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://btdc08x1xpqvb"]
+
+[ext_resource type="PackedScene" uid="uid://bikv4642qtyrd" path="res://base_bullet.tscn" id="1_buaij"]
+[ext_resource type="Script" uid="uid://ph3uihsvmfpg" path="res://revolving_bullet.gd" id="2_3t4n2"]
+[ext_resource type="AudioStream" uid="uid://cn1bqetgbmy82" path="res://assets/sound/revolving_bullet_fire.wav" id="3_3t4n2"]
+
+[sub_resource type="Curve" id="Curve_h1bej"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2o6r5"]
+curve = SubResource("Curve_h1bej")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1rvkf"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_2o6r5")
+color = Color(1, 1, 1, 0.7019608)
+
+[node name="RevolvingBullet" unique_id=15880832 instance=ExtResource("1_buaij")]
+script = ExtResource("2_3t4n2")
+
+[node name="GPUParticles2D" parent="." index="2" unique_id=1235616472]
+process_material = SubResource("ParticleProcessMaterial_1rvkf")
+
+[node name="Fire" type="AudioStreamPlayer" parent="." index="4" unique_id=1756972663]
+stream = ExtResource("3_3t4n2")
