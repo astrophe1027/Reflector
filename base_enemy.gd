@@ -127,8 +127,8 @@ func _hit() -> void:
 	if audio != null:
 		audio.play()
 	if hp<=0:
-		var particle : GPUParticles2D = death_particle.instantiate()
-		particle.process_material.color = $Polygon2D.color
+		var particle : CPUParticles2D = death_particle.instantiate()
+		particle.color = $Polygon2D.color
 		if is_inside_tree():
 			Global.world.add_child(particle)
 		particle.global_position = global_position

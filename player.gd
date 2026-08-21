@@ -82,7 +82,7 @@ func _on_area_entered(area: Node2D) -> void:
 	if area is BaseBullet:
 		var bullet : BaseBullet = area
 		if !bullet.is_reflected:
-			#_hit(bullet.damage)
+			_hit(bullet.damage)
 			bullet.queue_free()
 	elif area is Coin:
 		var coin : Coin = area

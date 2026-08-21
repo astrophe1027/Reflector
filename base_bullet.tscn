@@ -9,22 +9,6 @@ radius = 5.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_2o6r5"]
-curve = SubResource("Curve_h1bej")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sqibo"]
-resource_local_to_scene = true
-particle_flag_disable_z = true
-angle_min = 1.0728835e-05
-angle_max = 360.00003
-radial_velocity_min = -2.2351742e-05
-radial_velocity_max = -2.2351742e-05
-gravity = Vector3(0, 0, 0)
-scale_min = 10.0
-scale_max = 10.0
-scale_curve = SubResource("CurveTexture_2o6r5")
-color = Color(1, 1, 1, 0.7019608)
-
 [node name="BaseBullet" type="Area2D" unique_id=15880832 groups=["Bullet"]]
 position = Vector2(80, 134)
 script = ExtResource("1_h1bej")
@@ -36,10 +20,18 @@ shape = SubResource("CircleShape2D_iey6n")
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1354813491]
 polygon = PackedVector2Array(0, -7, 4, -6, 6, -4, 7, 0, 6, 4, 4, 6, 0, 7, -4, 6, -6, 4, -7, 0, -6, -4, -4, -6)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1235616472]
+[node name="GPUParticles2D" type="CPUParticles2D" parent="." unique_id=1832434277]
 amount = 10
 lifetime = 0.3
-process_material = SubResource("ParticleProcessMaterial_sqibo")
+fixed_fps = 30
+draw_order = 1
+gravity = Vector2(0, 0)
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+scale_amount_min = 10.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_h1bej")
+color = Color(1, 1, 1, 0.7019608)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=434201512]
 rect = Rect2(-100, -100, 200, 200)

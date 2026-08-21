@@ -46,8 +46,6 @@ func _find_target() -> void:
 			target = enemy
 	if target != null:
 		target.is_targeted = true
-		$Polygon2D.color = Color(1.0, 1.0, 1.0, 1.0)
-		$GPUParticles2D.process_material.color = Color(1.0, 1.0, 1.0, 1.0)
 		speed *= 1.5
 
 func _physics_process(delta: float) -> void:
@@ -67,4 +65,6 @@ func _move(delta: float) -> void:
 					is_revolving = false
 					$Fire.play()
 					speed *= 1.5
+					$Polygon2D.color = Color(1.0, 1.0, 1.0, 1.0)
+					$GPUParticles2D.color = Color(1.0, 1.0, 1.0, 1.0)
 	super._move(delta)
