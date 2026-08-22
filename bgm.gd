@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 
 func boss() -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "volume_db", -40.0, 1).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "volume_db", -80.0, 4).set_ease(Tween.EASE_IN)
 	tween.finished.connect(func():
 		stop()
 		stream = boss_musics[0]

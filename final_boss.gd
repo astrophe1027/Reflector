@@ -75,8 +75,8 @@ func fire_bullet() -> void:
 		Global.world.add_child(h)
 		await get_tree().create_timer(3, false, true).timeout
 		$AnimatedSprite2D.play("start")
-		await get_tree().create_timer(4, false, true).timeout
 		Global.world.find_child("BGM").boss()
+		await get_tree().create_timer(3, false, true).timeout
 		Global.world.save()
 		await get_tree().create_timer(1, false, true).timeout
 		phase = 1
@@ -192,12 +192,18 @@ func _hit() -> void:
 		h.velocity = (Global.player.global_position-global_position).normalized()*23
 		h.global_position = global_position
 		Global.world.add_child(h)
+		var particle : CPUParticles2D = death_particle.instantiate()
+		particle.color = $Polygon2D.color
+		particle.lifetime = 3.0
+		Global.world.add_child(particle)
+		particle.global_position = global_position
 		
 	if hp<=0:
-		var particle : GPUParticles2D = death_particle.instantiate()
-		particle.process_material.color = $Polygon2D.color
-		if is_inside_tree():
-			Global.world.add_child(particle)
+		var particle : CPUParticles2D = death_particle.instantiate()
+		particle.color = $Polygon2D.color
+		particle.amount = 100
+		particle.lifetime = 3.0
+		Global.world.add_child(particle)
 		particle.global_position = global_position
 		_drop_coin()
 		if randf() < 0.015:

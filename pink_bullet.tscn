@@ -19,10 +19,10 @@ color = Color(1, 0, 1, 1)
 polygon = PackedVector2Array(0, -18, 6, -17, 11, -14, 14, -11, 17, -6, 18, 0, 17, 6, 14, 11, 11, 14, 6, 17, 0, 18, -6, 17, -11, 14, -14, 11, -17, 6, -18, 0, -17, -6, -14, -11, -11, -14, -6, -17)
 
 [node name="GPUParticles2D" parent="." index="2" unique_id=1832434277]
-amount = 25
-lifetime = 0.8
-scale_amount_min = 20.0
-scale_amount_max = 20.0
+amount = 5
+lifetime = 1.0
+scale_amount_min = 25.0
+scale_amount_max = 25.0
 color = Color(1, 0, 1, 0.7019608)
 
 [node name="VisibleOnScreenNotifier2D" parent="." index="3" unique_id=434201512]
