@@ -36,6 +36,7 @@ func _physics_process(_delta: float) -> void:
 
 func _on_area_entered(area: Node2D) -> void:
 	if area.is_in_group("Player"):
+		Global.world.score += 1000
 		Global.player.current_health = Global.player.max_health
 		
 		queue_free() # 코인 소멸

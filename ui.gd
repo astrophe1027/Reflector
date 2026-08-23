@@ -11,7 +11,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	$TimeLabel.text = "지난 시간: "+str(int(Global.world.time_elapsed))+"초"
+	$TimeLabel.text = "생존 시간: "+str(int(Global.world.time_elapsed))+"초"
 	$shieldBar.max_value = Global.player.find_child("Shield").max_gauge
 	$shieldBar.value = Global.player.find_child("Shield").current_gauge
 	if is_instance_valid(get_tree().get_first_node_in_group("Boss")):
@@ -22,6 +22,7 @@ func _process(delta: float) -> void:
 	else:
 		if $BossBar.visible:
 			$BossBar.hide()
+	$ScoreLabel.text = "점수: "+str(Global.world.score)
 	
 func _on_player_health_changed(current_health: int, max_health: int) -> void:
 	$HpBar.value = current_health

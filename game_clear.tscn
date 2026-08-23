@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://hiof1eikxf2w"]
+
+[ext_resource type="Script" uid="uid://dmytxr833svix" path="res://game_clear.gd" id="1_tj2nb"]
+[ext_resource type="FontFile" uid="uid://b0vdm2vsxydp0" path="res://assets/font/Galmuri11-Bold.ttf" id="2_25dmb"]
+[ext_resource type="Texture2D" uid="uid://db68hut42xhfb" path="res://assets/long_button.png" id="3_70ckh"]
+[ext_resource type="Script" uid="uid://cf4vwcxcqpnm4" path="res://button.gd" id="4_htb6p"]
+[ext_resource type="FontFile" uid="uid://cvwswsqhhd84u" path="res://assets/font/Galmuri11.ttf" id="6_4u5uc"]
+[ext_resource type="AudioStream" uid="uid://b5n2c0raacr67" path="res://assets/sound/bgm/For Me.wav" id="7_hspyq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_iey6n"]
+font = ExtResource("2_25dmb")
+font_size = 130
+
+[sub_resource type="LabelSettings" id="LabelSettings_8u835"]
+font = ExtResource("2_25dmb")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_e57ba"]
+font = ExtResource("6_4u5uc")
+font_size = 34
+
+[node name="GameClear" type="Control" unique_id=1065314145]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tj2nb")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1452684282]
+layout_mode = 0
+offset_right = 1176.0
+offset_bottom = 676.0
+color = Color(0, 0.62352943, 0.8666667, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1725193690]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 158.0
+offset_right = 947.0
+offset_bottom = 310.0
+text = "Game Clear"
+label_settings = SubResource("LabelSettings_iey6n")
+horizontal_alignment = 1
+
+[node name="Retry" type="TextureButton" parent="." unique_id=1658570549]
+layout_mode = 0
+offset_left = 378.0
+offset_top = 405.0
+offset_right = 705.0
+offset_bottom = 513.0
+texture_normal = ExtResource("3_70ckh")
+stretch_mode = 0
+script = ExtResource("4_htb6p")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Retry" unique_id=365135504]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 32.0
+offset_right = 394.0
+offset_bottom = 118.0
+text = "메뉴로 돌아가기"
+label_settings = SubResource("LabelSettings_8u835")
+
+[node name="Record" type="Label" parent="." unique_id=872460018]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 322.0
+offset_right = 1043.0
+offset_bottom = 376.0
+text = "생존 시간: 점수:"
+label_settings = SubResource("LabelSettings_e57ba")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1668211520]
+layout_mode = 0
+offset_right = 1245.0
+offset_bottom = 745.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1020268605]
+stream = ExtResource("7_hspyq")
+
+[connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]

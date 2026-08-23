@@ -100,7 +100,7 @@ func _hit(damage:int) -> void:
 	get_viewport().get_camera_2d().apply_shake(10.0, 0.2)
 	current_health -= damage
 	if current_health <= 0:
-		var particle : GPUParticles2D = death_particle.instantiate()
+		var particle : CPUParticles2D = death_particle.instantiate()
 		Global.world.add_child(particle)
 		particle.global_position = global_position
 		hide()
@@ -115,7 +115,7 @@ func _hit(damage:int) -> void:
 		tween.tween_property($Polygon2D, "color:a", 0, 0.15)
 		tween.tween_property($Polygon2D, "color:a", 1, 0.15)
 	$CollisionShape2D.set_deferred("disabled", true)
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(1.2, false, true).timeout
 	if current_health>0:
 		$CollisionShape2D.set_deferred("disabled", false)
 
@@ -125,6 +125,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		if !bullet.is_reflected:
 			if Global.upgrade_manager.traits.dodging_exp:
 				Global.world.experience += 10
+			Global.world.score += 50
 			Global.world.player.find_child("Shield").current_gauge += 0.4
 			$Bullet.play()
 			get_viewport().get_camera_2d().apply_shake(5.0, 0.1)

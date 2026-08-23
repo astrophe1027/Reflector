@@ -33,11 +33,11 @@ func _init_coin_stats() -> void:
 			exp_val = 10
 		"silver":
 			color = Color("#cccccc")
-			value = 300.0
+			value = 400.0
 			exp_val = 30
 		"gold":
 			color = Color("#ffd700")
-			value = 700
+			value = 1000
 			exp_val = 50
 	$Polygon2D.color = color
 
@@ -67,6 +67,7 @@ func _on_area_entered(area: Node2D) -> void:
 	if area.is_in_group("Player"):
 		# 플레이어에게 점수와 경험치 지급
 		Global.world.experience += exp_val
+		Global.world.score += value
 		# HTML의 코인 습득 이펙트 연출 구간 (원하는 사운드/파티클 코드를 넣으세요)
 		
 		queue_free() # 코인 소멸

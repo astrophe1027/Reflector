@@ -37,6 +37,7 @@ func _physics_process(_delta: float) -> void:
 func _on_area_entered(area: Node2D) -> void:
 	if area.is_in_group("Player"):
 		for coin : Coin in get_tree().get_nodes_in_group("Coin"):
+			Global.world.score += 1000
 			coin.base_magnet_range = 10000
 			coin.magnet_speed*=3
 			coin.max_magnet_speed*=3

@@ -19,9 +19,16 @@
 [ext_resource type="AudioStream" uid="uid://dhn5uu5qun628" path="res://assets/sound/level_up.wav" id="14_70uel"]
 [ext_resource type="AudioStream" uid="uid://bjasu6dhlj8yi" path="res://assets/sound/bgm/Three Red Hearts - Go (No Vocal).ogg" id="14_hiqwa"]
 [ext_resource type="Texture2D" uid="uid://byksm7g6h22cq" path="res://assets/shieldbar_3.png" id="15_wukud"]
+[ext_resource type="Texture2D" uid="uid://v307am63o5n" path="res://assets/pop_up.png" id="16_k83mh"]
 [ext_resource type="Script" uid="uid://dwhefgy2rsj4n" path="res://camera_2d.gd" id="17_bc84e"]
+[ext_resource type="Script" uid="uid://0u462s8w5p4b" path="res://menu.gd" id="17_qktwf"]
 [ext_resource type="PackedScene" uid="uid://cc3jb5ut7mk8n" path="res://upgrade_ui.tscn" id="17_udxuc"]
+[ext_resource type="Texture2D" uid="uid://db68hut42xhfb" path="res://assets/long_button.png" id="18_bh8nc"]
+[ext_resource type="Script" uid="uid://cf4vwcxcqpnm4" path="res://button.gd" id="19_jjr1n"]
+[ext_resource type="FontFile" uid="uid://dnu48gpmlc4j8" path="res://assets/font/neodgm.ttf" id="20_gggvi"]
 [ext_resource type="Script" uid="uid://bxk5ehbeumag2" path="res://bgm.gd" id="20_wukud"]
+[ext_resource type="Texture2D" uid="uid://dov0qovxt3eot" path="res://assets/button.png" id="21_w44yn"]
+[ext_resource type="PackedScene" uid="uid://vycqckdewdyq" path="res://settings.tscn" id="22_6ah6f"]
 
 [sub_resource type="Shader" id="Shader_lquwl"]
 code = "shader_type canvas_item;
@@ -109,6 +116,30 @@ shader_parameter/noise = SubResource("NoiseTexture2D_k3n1d")
 [sub_resource type="LabelSettings" id="LabelSettings_iey6n"]
 font = ExtResource("11_bc84e")
 font_size = 23
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bi6wa"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e57ba"]
+noise = SubResource("FastNoiseLite_bi6wa")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iey6n"]
+shader = ExtResource("7_wse8f")
+shader_parameter/scale = Vector2(1, 1)
+shader_parameter/strength = 0.15
+shader_parameter/fps = 6.0
+shader_parameter/noise = SubResource("NoiseTexture2D_e57ba")
+
+[sub_resource type="LabelSettings" id="LabelSettings_g1i3r"]
+font = ExtResource("20_gggvi")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_k83mh"]
+font = ExtResource("20_gggvi")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_my276"]
+font = ExtResource("20_gggvi")
+font_size = 34
 
 [node name="World" type="Node2D" unique_id=1777072767 groups=["World"]]
 script = ExtResource("1_dwbse")
@@ -205,7 +236,15 @@ offset_left = 40.0
 offset_top = 207.0
 offset_right = 201.0
 offset_bottom = 240.0
-text = "지난 시간: 0초"
+text = "생존 시간: 0초"
+label_settings = SubResource("LabelSettings_iey6n")
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=842456718]
+offset_left = 39.0
+offset_top = 237.0
+offset_right = 580.0
+offset_bottom = 270.0
+text = "점수:"
 label_settings = SubResource("LabelSettings_iey6n")
 
 [node name="VirtualJoystick" type="VirtualJoystick" parent="UI" unique_id=1286692193]
@@ -250,10 +289,10 @@ texture_under = ExtResource("8_ic0uy")
 texture_progress = ExtResource("15_wukud")
 
 [node name="LevelLabel" type="Label" parent="UI" unique_id=1241888490]
-offset_left = 45.0
-offset_top = 245.0
-offset_right = 206.0
-offset_bottom = 278.0
+offset_left = 40.0
+offset_top = 265.0
+offset_right = 201.0
+offset_bottom = 298.0
 text = "1Lv"
 label_settings = SubResource("LabelSettings_iey6n")
 
@@ -262,6 +301,114 @@ offset_right = 1195.0
 offset_bottom = 685.0
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
+
+[node name="Menu" type="TextureRect" parent="UI" unique_id=1309041462]
+process_mode = 3
+visible = false
+material = SubResource("ShaderMaterial_iey6n")
+offset_left = 127.0
+offset_top = 41.0
+offset_right = 1039.0
+offset_bottom = 613.0
+texture = ExtResource("16_k83mh")
+script = ExtResource("17_qktwf")
+
+[node name="Return" type="TextureButton" parent="UI/Menu" unique_id=1933103624]
+use_parent_material = true
+layout_mode = 0
+offset_left = 327.0
+offset_top = 79.0
+offset_right = 557.0
+offset_bottom = 167.0
+texture_normal = ExtResource("18_bh8nc")
+stretch_mode = 0
+script = ExtResource("19_jjr1n")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="UI/Menu/Return" unique_id=1255522449]
+use_parent_material = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 197.0
+offset_bottom = 71.0
+text = "돌아가기"
+label_settings = SubResource("LabelSettings_g1i3r")
+
+[node name="Retry" type="TextureButton" parent="UI/Menu" unique_id=479960358]
+use_parent_material = true
+layout_mode = 0
+offset_left = 329.0
+offset_top = 183.0
+offset_right = 559.0
+offset_bottom = 271.0
+texture_normal = ExtResource("18_bh8nc")
+stretch_mode = 0
+script = ExtResource("19_jjr1n")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="UI/Menu/Retry" unique_id=392892758]
+use_parent_material = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 197.0
+offset_bottom = 71.0
+text = "다시하기"
+label_settings = SubResource("LabelSettings_g1i3r")
+
+[node name="Main" type="TextureButton" parent="UI/Menu" unique_id=777118886]
+use_parent_material = true
+layout_mode = 0
+offset_left = 331.0
+offset_top = 383.0
+offset_right = 561.0
+offset_bottom = 471.0
+texture_normal = ExtResource("18_bh8nc")
+stretch_mode = 0
+script = ExtResource("19_jjr1n")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="UI/Menu/Main" unique_id=289837077]
+use_parent_material = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 197.0
+offset_bottom = 71.0
+text = "나가기"
+label_settings = SubResource("LabelSettings_k83mh")
+horizontal_alignment = 1
+
+[node name="SettingButton" type="TextureButton" parent="UI/Menu" unique_id=346846946]
+use_parent_material = true
+layout_mode = 0
+offset_left = 374.0
+offset_top = 289.0
+offset_right = 516.0
+offset_bottom = 367.0
+texture_normal = ExtResource("21_w44yn")
+stretch_mode = 0
+script = ExtResource("19_jjr1n")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="UI/Menu/SettingButton" unique_id=1623504311]
+use_parent_material = true
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 122.0
+offset_bottom = 61.0
+text = "설정"
+label_settings = SubResource("LabelSettings_my276")
+horizontal_alignment = 1
+
+[node name="Settings" parent="UI/Menu" unique_id=1755430200 instance=ExtResource("22_6ah6f")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 912.0
+offset_bottom = 572.0
 
 [node name="Player" parent="." unique_id=1642113600 groups=["Player"] instance=ExtResource("3_gbfbk")]
 position = Vector2(1250, 1250)
@@ -290,6 +437,9 @@ visible = false
 
 [connection signal="exp_changed" from="." to="UI" method="_on_world_exp_changed"]
 [connection signal="level_up" from="." to="UpgradeManager" method="trigger_level_up"]
+[connection signal="pressed" from="UI/Menu/Return" to="UI/Menu" method="_on_return_pressed"]
+[connection signal="pressed" from="UI/Menu/Retry" to="UI/Menu" method="_on_retry_pressed"]
+[connection signal="pressed" from="UI/Menu/Main" to="UI/Menu" method="_on_main_pressed"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="health_changed" from="Player" to="UI" method="_on_player_health_changed"]
 [connection signal="hit" from="Player" to="UI" method="_on_player_hit"]

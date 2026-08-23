@@ -19,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://c40fgfemiutc6" path="res://assets/sound/card.mp3" id="12_dg77c"]
 [ext_resource type="Texture2D" uid="uid://bjkbv5b3nc4d" path="res://assets/3_1.png" id="14_getpj"]
 [ext_resource type="FontFile" uid="uid://cvwswsqhhd84u" path="res://assets/font/Galmuri11.ttf" id="16_cegan"]
-[ext_resource type="Script" uid="uid://bhaxmyseqrcy4" path="res://settings.gd" id="17_82xsv"]
+[ext_resource type="PackedScene" uid="uid://vycqckdewdyq" path="res://settings.tscn" id="17_82xsv"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_efxa6"]
 frequency = 0.003
@@ -89,18 +89,6 @@ font_size = 38
 [sub_resource type="LabelSettings" id="LabelSettings_cegan"]
 font = ExtResource("16_cegan")
 font_size = 24
-
-[sub_resource type="LabelSettings" id="LabelSettings_e57ba"]
-font = ExtResource("7_cegan")
-font_size = 50
-
-[sub_resource type="LabelSettings" id="LabelSettings_074og"]
-font = ExtResource("7_cegan")
-font_size = 30
-
-[sub_resource type="LabelSettings" id="LabelSettings_82xsv"]
-font = ExtResource("7_cegan")
-font_size = 30
 
 [node name="Main" type="Control" unique_id=1019282425]
 material = SubResource("ShaderMaterial_ycdy4")
@@ -497,84 +485,12 @@ offset_bottom = 55.0
 text = "뒤로"
 label_settings = SubResource("LabelSettings_vivmo")
 
-[node name="Settings" type="TextureRect" parent="." unique_id=1423744807]
-visible = false
-use_parent_material = true
+[node name="Settings" parent="." unique_id=1755430200 instance=ExtResource("17_82xsv")]
 layout_mode = 0
-offset_left = 127.0
-offset_top = 41.0
-offset_right = 1039.0
-offset_bottom = 613.0
-texture = ExtResource("3_1bvp3")
-script = ExtResource("17_82xsv")
-
-[node name="Title" type="Label" parent="Settings" unique_id=1456579482]
-use_parent_material = true
-layout_mode = 0
-offset_left = 213.0
-offset_top = 51.0
-offset_right = 694.0
-offset_bottom = 79.0
-text = "설정"
-label_settings = SubResource("LabelSettings_e57ba")
-horizontal_alignment = 1
-
-[node name="Sound" type="Control" parent="Settings" unique_id=2035966732]
-anchors_preset = 0
-offset_left = 213.0
-offset_top = 51.0
-offset_right = 253.0
-offset_bottom = 91.0
-
-[node name="Sound" type="Label" parent="Settings/Sound" unique_id=1784947068]
-use_parent_material = true
-layout_mode = 0
-offset_left = -212.0
-offset_top = 81.0
-offset_right = 269.0
-offset_bottom = 140.0
-text = "소리 크기"
-label_settings = SubResource("LabelSettings_074og")
-horizontal_alignment = 1
-
-[node name="HSlider" type="HSlider" parent="Settings/Sound" unique_id=469731700]
-layout_mode = 0
-offset_left = 110.0
-offset_top = 75.0
-offset_right = 395.0
-offset_bottom = 122.0
-max_value = 200.0
-value = 100.0
-
-[node name="Value" type="Label" parent="Settings/Sound" unique_id=1804757675]
-layout_mode = 0
-offset_left = 427.0
-offset_top = 80.0
-offset_right = 480.0
-offset_bottom = 115.0
-text = "100"
-label_settings = SubResource("LabelSettings_82xsv")
-
-[node name="SettingBack" type="TextureButton" parent="Settings" unique_id=1403731440]
-use_parent_material = true
-layout_mode = 0
-offset_left = 712.0
-offset_top = 55.0
-offset_right = 847.0
-offset_bottom = 121.0
-texture_normal = ExtResource("5_4c57u")
-stretch_mode = 0
-script = ExtResource("6_yaehf")
-metadata/_edit_group_ = true
-
-[node name="Label" type="Label" parent="Settings/SettingBack" unique_id=1652636046]
-layout_mode = 0
-offset_left = 33.0
-offset_top = 10.0
-offset_right = 105.0
-offset_bottom = 55.0
-text = "뒤로"
-label_settings = SubResource("LabelSettings_vivmo")
+offset_left = 131.0
+offset_top = 34.0
+offset_right = 1043.0
+offset_bottom = 606.0
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=11197568]
 stream = ExtResource("5_lquwl")
@@ -604,5 +520,3 @@ stream = ExtResource("12_dg77c")
 [connection signal="pressed" from="Select/Hard/HardButton" to="." method="_on_hard_button_pressed"]
 [connection signal="pressed" from="Select/Back" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="Credit/CreditBack" to="." method="_on_credit_back_pressed"]
-[connection signal="value_changed" from="Settings/Sound/HSlider" to="Settings" method="_on_h_slider_value_changed"]
-[connection signal="pressed" from="Settings/SettingBack" to="." method="_on_setting_back_pressed"]

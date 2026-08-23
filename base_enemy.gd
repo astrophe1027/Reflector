@@ -123,10 +123,12 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _hit() -> void:
 	hp -= 1
+	Global.world.score += 70
 	var audio : AudioStreamPlayer = $Hit
 	if audio != null:
 		audio.play()
 	if hp<=0:
+		Global.world.score += 200
 		var particle : CPUParticles2D = death_particle.instantiate()
 		particle.color = $Polygon2D.color
 		if is_inside_tree():

@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://vycqckdewdyq"]
+
+[ext_resource type="Texture2D" uid="uid://v307am63o5n" path="res://assets/pop_up.png" id="1_cj1lu"]
+[ext_resource type="Script" uid="uid://bhaxmyseqrcy4" path="res://settings.gd" id="2_71mqq"]
+[ext_resource type="FontFile" uid="uid://b0vdm2vsxydp0" path="res://assets/font/Galmuri11-Bold.ttf" id="3_3j6r5"]
+[ext_resource type="Texture2D" uid="uid://dov0qovxt3eot" path="res://assets/button.png" id="4_3lj6o"]
+[ext_resource type="Script" uid="uid://cf4vwcxcqpnm4" path="res://button.gd" id="5_6mhpt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e57ba"]
+font = ExtResource("3_3j6r5")
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_074og"]
+font = ExtResource("3_3j6r5")
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_82xsv"]
+font = ExtResource("3_3j6r5")
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_vivmo"]
+font = ExtResource("3_3j6r5")
+font_size = 38
+
+[node name="Settings" type="TextureRect" unique_id=1755430200]
+visible = false
+use_parent_material = true
+offset_left = 127.0
+offset_top = 41.0
+offset_right = 1039.0
+offset_bottom = 613.0
+texture = ExtResource("1_cj1lu")
+script = ExtResource("2_71mqq")
+
+[node name="Title" type="Label" parent="." unique_id=265300868]
+use_parent_material = true
+layout_mode = 0
+offset_left = 213.0
+offset_top = 51.0
+offset_right = 694.0
+offset_bottom = 79.0
+text = "설정"
+label_settings = SubResource("LabelSettings_e57ba")
+horizontal_alignment = 1
+
+[node name="Sound" type="Control" parent="." unique_id=240419856]
+anchors_preset = 0
+offset_left = 213.0
+offset_top = 51.0
+offset_right = 253.0
+offset_bottom = 91.0
+
+[node name="Sound" type="Label" parent="Sound" unique_id=1126981138]
+use_parent_material = true
+layout_mode = 0
+offset_left = -212.0
+offset_top = 81.0
+offset_right = 269.0
+offset_bottom = 140.0
+text = "소리 크기"
+label_settings = SubResource("LabelSettings_074og")
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Sound" unique_id=1590620491]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 75.0
+offset_right = 395.0
+offset_bottom = 122.0
+max_value = 200.0
+value = 100.0
+
+[node name="Value" type="Label" parent="Sound" unique_id=973304634]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 80.0
+offset_right = 480.0
+offset_bottom = 115.0
+text = "100"
+label_settings = SubResource("LabelSettings_82xsv")
+
+[node name="SettingBack" type="TextureButton" parent="." unique_id=1804205813]
+use_parent_material = true
+layout_mode = 0
+offset_left = 712.0
+offset_top = 55.0
+offset_right = 847.0
+offset_bottom = 121.0
+texture_normal = ExtResource("4_3lj6o")
+stretch_mode = 0
+script = ExtResource("5_6mhpt")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="SettingBack" unique_id=738884653]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 10.0
+offset_right = 105.0
+offset_bottom = 55.0
+text = "뒤로"
+label_settings = SubResource("LabelSettings_vivmo")
+
+[connection signal="value_changed" from="Sound/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="pressed" from="SettingBack" to="." method="_on_setting_back_pressed"]

@@ -3,9 +3,6 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if Global.is_saved:
-		$Retry2.show()
-		$Retry.global_position.y+=100
 	$Record.text = "생존시간: "+str(Global.time)+"초    점수: "+str(Global.score)
 	get_tree().paused = false
 	$ColorRect.color.a = 1
@@ -26,12 +23,3 @@ func _on_retry_pressed() -> void:
 	tween.tween_property($BGM, "volume_db", -40.0, 1).set_ease(Tween.EASE_IN)
 	await get_tree().create_timer(1).timeout
 	get_tree().change_scene_to_file("res://main.tscn")
-
-
-
-func _on_retry_2_pressed() -> void:
-	var tween:Tween = get_tree().create_tween().set_parallel(true)
-	tween.tween_property($ColorRect, "color:a", 1, 1).set_ease(Tween.EASE_IN)
-	tween.tween_property($BGM, "volume_db", -40.0, 1).set_ease(Tween.EASE_IN)
-	await get_tree().create_timer(1).timeout
-	get_tree().change_scene_to_file("res://world.tscn")

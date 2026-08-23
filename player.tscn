@@ -105,7 +105,7 @@ stream = ExtResource("4_2hs0m")
 
 [node name="Bullet" type="AudioStreamPlayer" parent="." unique_id=1181580132]
 stream = ExtResource("4_hqtel")
-pitch_scale = 1.2
+pitch_scale = 1.5
 
 [node name="Hit" type="AudioStreamPlayer" parent="." unique_id=794753430]
 stream = ExtResource("5_sweqy")

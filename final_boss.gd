@@ -66,18 +66,18 @@ func rand_tp() -> void:
 func fire_bullet() -> void:
 	if phase == 0:
 		var m = magnet.instantiate()
-		m.velocity = (Global.player.global_position-global_position).normalized()*20
+		m.velocity = (Global.player.global_position-global_position).normalized()*21
 		m.global_position = global_position
 		Global.world.add_child(m)
 		var h = heal_pack.instantiate()
-		h.velocity = (Global.player.global_position-global_position).normalized()*23
+		h.velocity = (Global.player.global_position-global_position).normalized()*24
 		h.global_position = global_position
 		Global.world.add_child(h)
+		Global.world.save()
 		await get_tree().create_timer(3, false, true).timeout
 		$AnimatedSprite2D.play("start")
 		Global.world.find_child("BGM").boss()
 		await get_tree().create_timer(3, false, true).timeout
-		Global.world.save()
 		await get_tree().create_timer(1, false, true).timeout
 		phase = 1
 	elif phase == 1:
@@ -183,6 +183,7 @@ func _draw() -> void:
 		
 func _hit() -> void:
 	hp -= 1
+	Global.world.score += 50
 	var audio : AudioStreamPlayer = $Hit
 	if audio != null:
 		audio.play()
@@ -199,6 +200,7 @@ func _hit() -> void:
 		particle.global_position = global_position
 		
 	if hp<=0:
+		Global.world.score += 30000
 		var particle : CPUParticles2D = death_particle.instantiate()
 		particle.color = $Polygon2D.color
 		particle.amount = 100
@@ -206,11 +208,6 @@ func _hit() -> void:
 		Global.world.add_child(particle)
 		particle.global_position = global_position
 		_drop_coin()
-		if randf() < 0.015:
-			var magnet_instance = magnet.instantiate()
-			magnet_instance.global_position = global_position
-			if is_inside_tree():
-				Global.world.add_child(magnet_instance)
 		if audio != null:
 			$Hit.reparent(get_parent())
 			audio.finished.connect(audio.queue_free)

@@ -181,6 +181,7 @@ func _on_area_entered(area: Area2D) -> void:
 		var bullet : BaseBullet = area
 		if global_transform.x.dot(global_position - bullet.global_position) < 0 && !bullet.is_reflected:
 			#get_viewport().get_camera_2d().apply_shake(5.0, 0.1)
+			Global.world.score += 20
 			$Reflect.play()
 			spawn_shockwave_ring(bullet.global_position)
 			spawn_bullet_sparks(bullet)
@@ -234,4 +235,5 @@ func _on_area_entered(area: Area2D) -> void:
 		if(!enemy.is_in_group("Boss")):
 			for i in range(enemy.hp):
 				enemy._hit()
+				Global.world.score += 100
 				
