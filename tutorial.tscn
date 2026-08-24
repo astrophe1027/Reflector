@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://dy0gjtsepr7yc"]
+
+[ext_resource type="FontFile" uid="uid://b0vdm2vsxydp0" path="res://assets/font/Galmuri11-Bold.ttf" id="1_7n6eb"]
+[ext_resource type="Script" uid="uid://cpbly70owaxe3" path="res://tutorial.gd" id="1_yb1ct"]
+[ext_resource type="AudioStream" uid="uid://dtqog82noeof4" path="res://assets/sound/bgm/Three Red Hearts - Puzzle Pieces.ogg" id="2_hu44a"]
+[ext_resource type="Texture2D" uid="uid://dov0qovxt3eot" path="res://assets/button.png" id="3_rwowx"]
+[ext_resource type="Script" uid="uid://cf4vwcxcqpnm4" path="res://button.gd" id="4_hu44a"]
+[ext_resource type="FontFile" uid="uid://dnu48gpmlc4j8" path="res://assets/font/neodgm.ttf" id="5_0cr88"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yb1ct"]
+font = ExtResource("1_7n6eb")
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_4t6hg"]
+font = ExtResource("5_0cr88")
+font_size = 34
+
+[node name="Tutorial" type="Control" unique_id=1695898250]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yb1ct")
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=415763666]
+stream = ExtResource("2_hu44a")
+volume_db = -3.0
+autoplay = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1906122916]
+layout_mode = 0
+offset_left = 56.0
+offset_right = 1110.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=803098715]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=412573822]
+layout_mode = 2
+text = "
+
+그 저기 뭐냐
+
+
+
+
+
+
+
+
+
+
+
+
+시간이 모자라서 튜토리얼을 못만들었어요.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+만약 축제 당일에 당신이 이 글을 읽으신다면
+맞으면서 배워주시면 되겠습니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+나가기 버튼 만들기 귀찮네요.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+...
+
+
+
+
+
+
+
+
+
+
+
+
+아."
+label_settings = SubResource("LabelSettings_yb1ct")
+
+[node name="QuitButton" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=123707703]
+use_parent_material = true
+layout_mode = 2
+texture_normal = ExtResource("3_rwowx")
+stretch_mode = 0
+script = ExtResource("4_hu44a")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/QuitButton" unique_id=1490304938]
+use_parent_material = true
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 122.0
+offset_bottom = 61.0
+text = "나가기"
+label_settings = SubResource("LabelSettings_4t6hg")
+horizontal_alignment = 1
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

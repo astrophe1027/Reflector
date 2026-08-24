@@ -98,7 +98,7 @@ func game_clear() -> void:
 	Global.time = int(time_elapsed)
 	Global.level = player_level
 	Global.score = score
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(6).timeout
 	var tween:Tween = get_tree().create_tween().set_parallel(true)
 	tween.tween_property($UI.find_child("ColorRect"), "color:a", 1, 1).set_ease(Tween.EASE_IN)
 	tween.tween_property($BGM, "volume_db", -40.0, 1).set_ease(Tween.EASE_IN)

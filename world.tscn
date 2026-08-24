@@ -152,7 +152,6 @@ script = ExtResource("4_hiqwa")
 
 [node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1163449815]
 one_shot = true
-autostart = true
 script = ExtResource("5_wse8f")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1137102446]
@@ -426,7 +425,7 @@ script = ExtResource("17_bc84e")
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=2110111779]
 process_mode = 3
 stream = ExtResource("14_hiqwa")
-volume_db = -5.0
+volume_db = 2.0
 script = ExtResource("20_wukud")
 
 [node name="LevelUp" type="AudioStreamPlayer" parent="." unique_id=2053627712]

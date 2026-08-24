@@ -43,6 +43,17 @@ text = "설정"
 label_settings = SubResource("LabelSettings_e57ba")
 horizontal_alignment = 1
 
+[node name="Title2" type="Label" parent="." unique_id=1418174524]
+use_parent_material = true
+layout_mode = 0
+offset_left = 213.0
+offset_top = 305.0
+offset_right = 694.0
+offset_bottom = 364.0
+text = "조작"
+label_settings = SubResource("LabelSettings_e57ba")
+horizontal_alignment = 1
+
 [node name="Sound" type="Control" parent="." unique_id=240419856]
 anchors_preset = 0
 offset_left = 213.0
@@ -99,6 +110,18 @@ offset_right = 105.0
 offset_bottom = 55.0
 text = "뒤로"
 label_settings = SubResource("LabelSettings_vivmo")
+
+[node name="Control" type="Label" parent="." unique_id=1662033031]
+use_parent_material = true
+layout_mode = 0
+offset_left = 175.0
+offset_top = 364.0
+offset_right = 656.0
+offset_bottom = 513.0
+text = "플레이어 조작:W, A, S, D
+방패 조작:방향키
+선택:Space"
+label_settings = SubResource("LabelSettings_074og")
 
 [connection signal="value_changed" from="Sound/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="SettingBack" to="." method="_on_setting_back_pressed"]

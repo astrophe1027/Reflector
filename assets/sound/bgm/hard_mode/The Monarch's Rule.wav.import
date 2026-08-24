@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://btnalhljpil6g"
+path="res://.godot/imported/The Monarch's Rule.wav-2ccf201cf2f31ab9c14d106b22481ef5.sample"
+
+[deps]
+
+source_file="res://assets/sound/bgm/hard_mode/The Monarch's Rule.wav"
+dest_files=["res://.godot/imported/The Monarch's Rule.wav-2ccf201cf2f31ab9c14d106b22481ef5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

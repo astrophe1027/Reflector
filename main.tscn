@@ -140,7 +140,6 @@ offset_bottom = 356.0
 texture_normal = ExtResource("4_kek77")
 stretch_mode = 0
 script = ExtResource("6_yaehf")
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="Button" unique_id=724611270]
 use_parent_material = true
@@ -156,9 +155,9 @@ label_settings = SubResource("LabelSettings_yaehf")
 use_parent_material = true
 layout_mode = 0
 offset_left = 437.0
-offset_top = 355.0
+offset_top = 353.0
 offset_right = 667.0
-offset_bottom = 443.0
+offset_bottom = 441.0
 texture_normal = ExtResource("4_kek77")
 stretch_mode = 0
 script = ExtResource("6_yaehf")
@@ -199,9 +198,9 @@ label_settings = SubResource("LabelSettings_syybg")
 [node name="SettingButton" type="TextureButton" parent="." unique_id=895697571]
 use_parent_material = true
 layout_mode = 0
-offset_left = 486.0
+offset_left = 428.0
 offset_top = 443.0
-offset_right = 628.0
+offset_right = 570.0
 offset_bottom = 521.0
 texture_normal = ExtResource("5_4c57u")
 stretch_mode = 0
@@ -216,6 +215,29 @@ offset_top = 22.0
 offset_right = 122.0
 offset_bottom = 61.0
 text = "설정"
+label_settings = SubResource("LabelSettings_syybg")
+horizontal_alignment = 1
+
+[node name="QuitButton" type="TextureButton" parent="." unique_id=1791570015]
+use_parent_material = true
+layout_mode = 0
+offset_left = 559.0
+offset_top = 441.0
+offset_right = 701.0
+offset_bottom = 519.0
+texture_normal = ExtResource("5_4c57u")
+stretch_mode = 0
+script = ExtResource("6_yaehf")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="QuitButton" unique_id=1694024938]
+use_parent_material = true
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 122.0
+offset_bottom = 61.0
+text = "나가기"
 label_settings = SubResource("LabelSettings_syybg")
 horizontal_alignment = 1
 
@@ -512,11 +534,13 @@ metadata/_edit_lock_ = true
 stream = ExtResource("12_dg77c")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="CreditButton" to="." method="_on_credit_button_pressed"]
 [connection signal="pressed" from="SettingButton" to="." method="_on_setting_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="Select/Easy/EasyButton" to="." method="_on_easy_button_pressed"]
 [connection signal="pressed" from="Select/Normal/NormalButton" to="." method="_on_normal_button_pressed"]
 [connection signal="focus_entered" from="Select/Hard" to="." method="_on_control_3_focus_entered"]
 [connection signal="pressed" from="Select/Hard/HardButton" to="." method="_on_hard_button_pressed"]
-[connection signal="pressed" from="Select/Back" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Select/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Credit/CreditBack" to="." method="_on_credit_back_pressed"]

@@ -119,8 +119,19 @@ func _on_button_pressed() -> void:
 
 
 func _on_button_2_pressed() -> void:
-	$SelectSound.play()
-	$Select.hide()
+	var tween:Tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property($ColorRect, "color:a", 1, 1).set_ease(Tween.EASE_IN)
+	tween.tween_property($BGM, "volume_db", -40.0, 1).set_ease(Tween.EASE_IN)
+	tween = create_tween()
+	tween.tween_property($Select/Hard, "global_position", $Select/Hard.global_position+Vector2(0, -120), 0.15)\
+	.set_trans(Tween.TRANS_CUBIC)\
+	.set_ease(Tween.EASE_OUT)
+	tween.tween_property($Select/Hard, "global_position", $Select/Hard.global_position+Vector2(0, 600), 0.3)\
+	.set_trans(Tween.TRANS_QUAD)\
+	.set_ease(Tween.EASE_IN)
+	tween.finished.connect(func():
+		get_tree().change_scene_to_file.call_deferred("res://tutorial.tscn")
+		)
 
 
 func _on_credit_back_pressed() -> void:
@@ -138,3 +149,13 @@ func _on_setting_button_pressed() -> void:
 func _on_setting_back_pressed() -> void:
 	$SelectSound.play()
 	$Settings.hide()
+
+
+func _on_quit_button_pressed() -> void:
+	$SelectSound.play()
+	get_tree().quit()
+
+
+func _on_back_pressed() -> void:
+	$SelectSound.play()
+	$Select.hide()

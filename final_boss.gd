@@ -183,11 +183,13 @@ func _draw() -> void:
 		
 func _hit() -> void:
 	hp -= 1
+	get_viewport().get_camera_2d().apply_shake(8.0, 0.3)
 	Global.world.score += 50
 	var audio : AudioStreamPlayer = $Hit
 	if audio != null:
 		audio.play()
 	if hp<=max_hp/2 && !healed:
+		get_viewport().get_camera_2d().apply_shake(15.0, 1.5)
 		healed = true
 		var h = heal_pack.instantiate()
 		h.velocity = (Global.player.global_position-global_position).normalized()*23
@@ -200,6 +202,7 @@ func _hit() -> void:
 		particle.global_position = global_position
 		
 	if hp<=0:
+		get_viewport().get_camera_2d().apply_shake(20.0, 2)
 		Global.world.score += 30000
 		var particle : CPUParticles2D = death_particle.instantiate()
 		particle.color = $Polygon2D.color
@@ -208,6 +211,7 @@ func _hit() -> void:
 		Global.world.add_child(particle)
 		particle.global_position = global_position
 		_drop_coin()
+		Global.world.game_clear()
 		if audio != null:
 			$Hit.reparent(get_parent())
 			audio.finished.connect(audio.queue_free)

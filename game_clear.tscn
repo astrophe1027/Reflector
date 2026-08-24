@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://db68hut42xhfb" path="res://assets/long_button.png" id="3_70ckh"]
 [ext_resource type="Script" uid="uid://cf4vwcxcqpnm4" path="res://button.gd" id="4_htb6p"]
 [ext_resource type="FontFile" uid="uid://cvwswsqhhd84u" path="res://assets/font/Galmuri11.ttf" id="6_4u5uc"]
-[ext_resource type="AudioStream" uid="uid://b5n2c0raacr67" path="res://assets/sound/bgm/For Me.wav" id="7_hspyq"]
+[ext_resource type="AudioStream" uid="uid://dtqog82noeof4" path="res://assets/sound/bgm/Three Red Hearts - Puzzle Pieces.ogg" id="6_tj2nb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iey6n"]
 font = ExtResource("2_25dmb")
@@ -83,6 +83,7 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1020268605]
-stream = ExtResource("7_hspyq")
+stream = ExtResource("6_tj2nb")
+volume_db = -3.0
 
 [connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
