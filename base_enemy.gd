@@ -90,6 +90,16 @@ func _draw() -> void:
 		var end_point = target_dir * line_length
 		var line_color = Color($Polygon2D.color, dynamic_alpha)
 		draw_line(Vector2.ZERO, end_point, line_color, dynamic_width)
+		
+		var base_radius = $CollisionShape2D.shape.radius+4.0 # 적 본체 반지름
+		var ring_radius = base_radius + $CollisionShape2D.shape.radius*0.4 * (1.0 - percent)
+		
+		# 알파값: 점점 짙어짐 (0.0 -> 1.0)
+		var ring_color = Color(1.0, 1.0, 1.0, percent)
+		var line_width = 3.0- percent
+		
+		# 축소하는 차징 원 링 그리기
+		draw_arc(Vector2.ZERO, ring_radius, 0, TAU, 32, ring_color, line_width, false)
 
 func _on_charge_timer_timeout() -> void:
 	await fire_bullet()

@@ -10,6 +10,8 @@ var upgrade_manager = Global.upgrade_manager
 var revolving_bullet_scene: PackedScene = preload("res://revolving_bullet.tscn")
 var sub_bullet_scene: PackedScene = preload("res://red_bullet.tscn")
 
+var _last_closest_bullet: Node2D = null
+
 signal overheated
 
 # Called when the node enters the scene tree for the first time.
@@ -22,7 +24,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	
+	update_closest_bullet_outline()
 	var level_progress = clamp((Global.world.player_level-1.0) / 8.0, 0.0, 1.0)
 	max_gauge = lerp(4.0, 5.0, level_progress) * upgrade_manager.modifiers.shield_max
 	regen_rate = lerp(0.3, 0.6, level_progress) * upgrade_manager.modifiers.shield_regen
@@ -79,7 +81,7 @@ func _physics_process(delta: float) -> void:
 					$CollisionShape2D.set_deferred("disabled", false)
 				velocity = velocity.normalized()
 				global_rotation = velocity.angle()
-				global_position = get_parent().global_position + velocity*65
+				global_position = get_parent().global_position + velocity*55
 		else:
 			current_gauge += regen_rate * 1.0/60.0
 			if current_gauge >= max_gauge:
@@ -98,7 +100,42 @@ func _physics_process(delta: float) -> void:
 		if visible:
 			hide()
 			$CollisionShape2D.set_deferred("disabled", true)
+			
+func update_closest_bullet_outline() -> void:
+	var bullets = get_tree().get_nodes_in_group("Bullet")
+	
+	# 트리에 총알이 없으면 이전 외곽선 끄고 종료
+	if bullets.is_empty():
+		if is_instance_valid(_last_closest_bullet) and _last_closest_bullet.has_method("set_outline_enabled"):
+			_last_closest_bullet.set_outline_enabled(false)
+			_last_closest_bullet = null
+		return
 
+	var closest_bullet: Node2D = null
+	var min_distance_sq: float = INF # 제곱 거리 비교 (performance 최적화)
+
+	# 가장 가까운 총알 탐색
+	for bullet in bullets:
+		if not is_instance_valid(bullet):
+			continue
+			
+		var distance_sq = global_position.distance_squared_to(bullet.global_position)
+		if distance_sq < min_distance_sq:
+			min_distance_sq = distance_sq
+			closest_bullet = bullet
+
+	# 가장 가까운 총알이 바뀐 경우 처리
+	if _last_closest_bullet != closest_bullet:
+		# 이전 총알 외곽선 끄기
+		if is_instance_valid(_last_closest_bullet) and _last_closest_bullet.has_method("set_outline_enabled"):
+			_last_closest_bullet.set_outline_enabled(false)
+		
+		# 새 총알 외곽선 켜기
+		if is_instance_valid(closest_bullet) and closest_bullet.has_method("set_outline_enabled"):
+			closest_bullet.set_outline_enabled(true)
+			
+		_last_closest_bullet = closest_bullet
+		
 func spawn_shockwave_ring(impact_position: Vector2) -> void:
 	var ring = Sprite2D.new()
 	ring.texture = preload("res://assets/ring.png")
@@ -179,7 +216,7 @@ func play_parry_kick(camera: Camera2D, bullet_dir: Vector2) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area is BaseBullet:
 		var bullet : BaseBullet = area
-		if global_transform.x.dot(global_position - bullet.global_position) < 0 && !bullet.is_reflected:
+		if (global_transform.x.dot(global_position - bullet.global_position) < 0 || Vector2.from_angle(bullet.global_rotation).dot(Vector2.from_angle(global_rotation)) < 0.0) && !bullet.is_reflected:
 			#get_viewport().get_camera_2d().apply_shake(5.0, 0.1)
 			Global.world.score += 20
 			$Reflect.play()

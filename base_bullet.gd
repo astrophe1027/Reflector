@@ -16,9 +16,20 @@ func _reflected() -> void:
 	$Polygon2D.color = Color(0.0, 1.0, 1.0, 1.0)
 	$GPUParticles2D.color = Color(0.0, 1.0, 1.0, 1.0)
 	
+func create_outline(color: Color, width: float) -> void:
+	var line = $Line2D
+	var points = $Polygon2D.polygon
+	
+	if points.size() > 0:
+		points.append(points[0]) # 다각형을 닫아주기 위해 첫 점 추가
+		line.points = points
+		line.default_color = color
+		line.width = width
+		line.joint_mode = Line2D.LINE_JOINT_ROUND # 모서리 깔끔하게 처리
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
+	create_outline(Color(1.0, 1.0, 1.0, 0.788), 2.0)
 
 func _physics_process(delta: float) -> void:
 	_move(delta)
@@ -29,3 +40,6 @@ func _move(delta: float) -> void:
 	
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
+
+func set_outline_enabled(enabled: bool) -> void:
+	$Line2D.visible = enabled

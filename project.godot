@@ -15,8 +15,15 @@ general/accessibility_support=2
 [application]
 
 config/name="Reflector"
+config/version="1.0"
 run/main_scene="uid://cerkjvt5pxmmi"
 config/features=PackedStringArray("4.7", "Mobile")
+run/low_processor_mode=true
+config/icon="uid://bbwivbhye5yxd"
+
+[audio]
+
+general/default_playback_type.web=0
 
 [autoload]
 

@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://bxk5ehbeumag2" path="res://bgm.gd" id="20_wukud"]
 [ext_resource type="Texture2D" uid="uid://dov0qovxt3eot" path="res://assets/button.png" id="21_w44yn"]
 [ext_resource type="PackedScene" uid="uid://vycqckdewdyq" path="res://settings.tscn" id="22_6ah6f"]
+[ext_resource type="PackedScene" uid="uid://d30h0iltyusqr" path="res://red_bullet.tscn" id="30_qktwf"]
 
 [sub_resource type="Shader" id="Shader_lquwl"]
 code = "shader_type canvas_item;
@@ -141,6 +142,10 @@ font_size = 40
 font = ExtResource("20_gggvi")
 font_size = 34
 
+[sub_resource type="Environment" id="Environment_iey6n"]
+background_mode = 3
+glow_enabled = true
+
 [node name="World" type="Node2D" unique_id=1777072767 groups=["World"]]
 script = ExtResource("1_dwbse")
 
@@ -152,6 +157,7 @@ script = ExtResource("4_hiqwa")
 
 [node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1163449815]
 one_shot = true
+autostart = true
 script = ExtResource("5_wse8f")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1137102446]
@@ -433,6 +439,13 @@ stream = ExtResource("14_70uel")
 
 [node name="UpgradeUI" parent="." unique_id=1521495284 instance=ExtResource("17_udxuc")]
 visible = false
+
+[node name="RedBullet" parent="." unique_id=15880832 instance=ExtResource("30_qktwf")]
+modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(783, 1201)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1253256367]
+environment = SubResource("Environment_iey6n")
 
 [connection signal="exp_changed" from="." to="UI" method="_on_world_exp_changed"]
 [connection signal="level_up" from="." to="UpgradeManager" method="trigger_level_up"]
