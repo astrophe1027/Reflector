@@ -19,6 +19,14 @@ func _input(event: InputEvent) -> void:
 			get_tree().paused = false
 			visible = false
 
+func _notification(what: int) -> void:
+	match what:
+		# 게임 창이 포커스를 잃었을 때 (탭 전환, 모바일 브라우저 최소화 등)
+		NOTIFICATION_APPLICATION_FOCUS_OUT:
+			if !get_tree().paused && !visible:
+				get_tree().paused = true
+				visible = true
+				
 func _on_return_pressed() -> void:
 	if get_tree().paused && visible:
 		get_tree().paused = false

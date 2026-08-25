@@ -42,3 +42,16 @@ func _input(event: InputEvent) -> void:
 		var mode := DisplayServer.window_get_mode()
 		var is_window: bool = mode != DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if is_window else DisplayServer.WINDOW_MODE_WINDOWED)
+		
+		
+func _notification(what: int) -> void:
+	match what:
+		# 게임 창이 포커스를 잃었을 때 (탭 전환, 모바일 브라우저 최소화 등)
+		NOTIFICATION_APPLICATION_FOCUS_OUT:
+			# Master 오디오 버스를 음소거 처리
+			AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), true)
+			
+		# 다시 게임 창으로 돌아왔을 때
+		NOTIFICATION_APPLICATION_FOCUS_IN:
+			# Master 오디오 버스 음소거 해제
+			AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), false)
