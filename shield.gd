@@ -10,6 +10,8 @@ var upgrade_manager = Global.upgrade_manager
 var revolving_bullet_scene: PackedScene = preload("res://revolving_bullet.tscn")
 var sub_bullet_scene: PackedScene = preload("res://red_bullet.tscn")
 
+var ring_texture: Texture2D = preload("res://assets/ring.png")
+
 var _last_closest_bullet: Node2D = null
 
 signal overheated
@@ -53,11 +55,12 @@ func _physics_process(delta: float) -> void:
 			var closest_bullet: Node2D = null
 			var min_distance: float = INF 
 			
-			for bullet : BaseBullet in bullets:
-				var dist = get_parent().global_position.distance_to(bullet.global_position)
-				if dist > 65.0 and dist < min_distance and !bullet.is_reflected:
-					min_distance = dist
-					closest_bullet = bullet
+			for bullet: BaseBullet in bullets:
+				if is_instance_valid(bullet) and not bullet.is_reflected:
+					var dist_sq = get_parent().global_position.distance_squared_to(bullet.global_position)
+					if dist_sq > 4225.0 and dist_sq < min_distance: # 65.0^2 = 4225.0
+						min_distance = dist_sq
+						closest_bullet = bullet
 			if closest_bullet != null:
 				if !visible:
 					show()
@@ -138,15 +141,16 @@ func update_closest_bullet_outline() -> void:
 		
 func spawn_shockwave_ring(impact_position: Vector2) -> void:
 	var ring = Sprite2D.new()
-	ring.texture = preload("res://assets/ring.png")
+	ring.texture = ring_texture
 	#ring.global_rotation = global_rotation
 	ring.scale = Vector2(0.2, 0.2) # 아주 작은 크기에서 시작
 	ring.modulate = Color(0.915, 0.915, 1.224, 1.0) # 살짝 푸른빛 + 쨍한 밝기(HDR)
 	ring.material = CanvasItemMaterial.new()
 	ring.material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	ring.z_index = z_index + 1
-	add_child(ring)
 	ring.global_position = impact_position
+	Global.world.add_child(ring)
+
 	#ring.top_level = true
 	# Tween으로 확산 연출
 	var tween = create_tween().set_parallel(true)
@@ -194,14 +198,9 @@ func spawn_bullet_sparks(bullet: Node2D) -> void:
 	# 6. 위치 지정 및 씬에 추가
 	particle.global_position = bullet.global_position
 	get_parent().add_child(particle)
-	
 	# 파티클 재생
 	particle.emitting = true
-	
-	# 7. Tween으로 파티클 라이프타임 끝난 후 자동 삭제 (Timer 대체)
-	var tween = create_tween()
-	tween.tween_interval(particle.lifetime + 0.1)
-	tween.finished.connect(particle.queue_free)
+	get_tree().create_timer(particle.lifetime + 0.05).timeout.connect(particle.queue_free)
 	
 func play_parry_kick(camera: Camera2D, bullet_dir: Vector2) -> void:
 	# 탄환 진행 방향의 반대(튕겨 나가는 방향)로 8px 정도 화면 이동
@@ -213,6 +212,34 @@ func play_parry_kick(camera: Camera2D, bullet_dir: Vector2) -> void:
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(camera, "offset", Vector2.ZERO, 0.1)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+func reflect(bullet:BaseBullet) -> void:
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	if enemies.size() == 0:
+		pass
+	var closest_enemy: BaseEnemy = null
+	var min_distance: float = INF
+	
+	var player_pos = get_parent().global_position
+	
+	for enemy: BaseEnemy in enemies:
+		if is_instance_valid(enemy) and not enemy.is_targeted:
+			if global_transform.x.dot((enemy.global_position - global_position).normalized()) > 0:
+				var dist_sq = player_pos.distance_squared_to(enemy.global_position)
+				if dist_sq < min_distance:
+					min_distance = dist_sq
+					closest_enemy = enemy
+	if !is_instance_valid(closest_enemy):
+		bullet.global_rotation = Vector2.RIGHT.rotated(bullet.global_rotation).bounce(global_transform.x).angle()
+	else:
+		bullet.global_rotation = (closest_enemy.global_position - bullet.global_position).angle()
+		closest_enemy.is_targeted = true
+	bullet.is_reflected = true
+	if bullet.speed <= 3:
+		bullet.speed *= 3
+	else:
+		bullet.speed *= 2
+	bullet.speed *= upgrade_manager.modifiers.reflect_speed
 func _on_area_entered(area: Area2D) -> void:
 	if area is BaseBullet:
 		var bullet : BaseBullet = area
@@ -220,42 +247,20 @@ func _on_area_entered(area: Area2D) -> void:
 			#get_viewport().get_camera_2d().apply_shake(5.0, 0.1)
 			Global.world.score += 20
 			$Reflect.play()
-			spawn_shockwave_ring(bullet.global_position)
-			spawn_bullet_sparks(bullet)
+			if Global.graphic_effect:
+				spawn_shockwave_ring(bullet.global_position)
+				spawn_bullet_sparks(bullet)
 			play_parry_kick(get_viewport().get_camera_2d(), Vector2.from_angle(bullet.global_rotation))
 			current_gauge -= 0.1
-			var enemies = get_tree().get_nodes_in_group("Enemy")
-			if enemies.size() == 0:
-				pass
-			var closest_enemy: BaseEnemy = null
-			var min_distance: float = INF
 			
-			var player_pos = get_parent().global_position
+			reflect(bullet)
 			
-			for enemy:BaseEnemy in enemies:
-				if is_instance_valid(enemy) && !enemy.is_targeted:
-					if global_transform.x.dot((enemy.global_position - global_position).normalized()) > 0:
-						var dist = player_pos.distance_to(enemy.global_position)
-						if dist < min_distance:
-							min_distance = dist
-							closest_enemy = enemy
-			if !is_instance_valid(closest_enemy):
-				area.global_rotation = Vector2.RIGHT.rotated(bullet.global_rotation).bounce(global_transform.x).angle()
-			else:
-				bullet.global_rotation = (closest_enemy.global_position - bullet.global_position).angle()
-				closest_enemy.is_targeted = true
-			bullet.is_reflected = true
-			if bullet.speed <= 3:
-				bullet.speed *= 3
-			else:
-				bullet.speed *= 2
-			bullet.speed *= upgrade_manager.modifiers.reflect_speed
-			if randf()<0.3 && upgrade_manager.traits.revolving_bullet:
+			if upgrade_manager.traits.revolving_bullet && randf()<0.3:
 				var b = revolving_bullet_scene.instantiate()
 				Global.world.add_child(b)
 				b.global_position = bullet.global_position
 				b.global_rotation = bullet.global_rotation
-			if randf()<0.3 && upgrade_manager.traits.split_bullet:
+			if upgrade_manager.traits.split_bullet && randf()<0.3:
 				for i in range(2):
 					var b = sub_bullet_scene.instantiate()
 					Global.world.add_child(b)

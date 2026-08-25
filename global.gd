@@ -14,6 +14,9 @@ var level:int = 0
 var retry_save:Dictionary
 var is_retry:bool = false
 
+var main_volume:int = 100
+var graphic_effect:bool = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
