@@ -39,6 +39,7 @@ func _init() -> void:
 		next_exp = Global.save.next_exp
 		experience = Global.save.exp
 		time_elapsed = Global.save.time
+		score = Global.save.score
 		easy_mode = Global.save.easy_mode
 		hard_mode = Global.save.hard_mode
 		short_mode = Global.save.short_mode
@@ -56,6 +57,7 @@ func _ready() -> void:
 		next_exp = Global.save.next_exp
 		experience = Global.save.exp
 		time_elapsed = Global.save.time
+		score = Global.save.score
 		easy_mode = Global.save.easy_mode
 		hard_mode = Global.save.hard_mode
 		short_mode = Global.save.short_mode
@@ -121,6 +123,7 @@ func save() -> void:
 		"applied_one_time_upgrades": Global.upgrade_manager.applied_one_time_upgrades,
 		"level": player_level,
 		"time": time_elapsed,
+		"score": score,
 		"next_exp": next_exp,
 		"exp": experience,
 		"easy_mode": easy_mode,

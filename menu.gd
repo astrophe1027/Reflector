@@ -64,3 +64,7 @@ func _on_main_pressed() -> void:
 		await get_tree().create_timer(0.1).timeout
 		get_tree().change_scene_to_file.call_deferred("res://main.tscn")
 		)
+
+
+func _on_setting_button_pressed() -> void:
+	$Settings.show()

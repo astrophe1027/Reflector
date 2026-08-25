@@ -442,7 +442,7 @@ visible = false
 
 [node name="RedBullet" parent="." unique_id=15880832 instance=ExtResource("30_qktwf")]
 modulate = Color(18.892157, 18.892157, 18.892157, 1)
-position = Vector2(783, 1201)
+position = Vector2(687, 1201)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1253256367]
 environment = SubResource("Environment_iey6n")
@@ -452,6 +452,7 @@ environment = SubResource("Environment_iey6n")
 [connection signal="pressed" from="UI/Menu/Return" to="UI/Menu" method="_on_return_pressed"]
 [connection signal="pressed" from="UI/Menu/Retry" to="UI/Menu" method="_on_retry_pressed"]
 [connection signal="pressed" from="UI/Menu/Main" to="UI/Menu" method="_on_main_pressed"]
+[connection signal="pressed" from="UI/Menu/SettingButton" to="UI/Menu" method="_on_setting_button_pressed"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="health_changed" from="Player" to="UI" method="_on_player_health_changed"]
 [connection signal="hit" from="Player" to="UI" method="_on_player_hit"]
