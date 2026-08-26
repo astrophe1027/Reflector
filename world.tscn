@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://byksm7g6h22cq" path="res://assets/shieldbar_3.png" id="15_wukud"]
 [ext_resource type="Texture2D" uid="uid://v307am63o5n" path="res://assets/pop_up.png" id="16_k83mh"]
 [ext_resource type="Script" uid="uid://dwhefgy2rsj4n" path="res://camera_2d.gd" id="17_bc84e"]
+[ext_resource type="Texture2D" uid="uid://cgn4b552x7fwg" path="res://assets/arrow.png" id="17_jjr1n"]
 [ext_resource type="Script" uid="uid://0u462s8w5p4b" path="res://menu.gd" id="17_qktwf"]
 [ext_resource type="PackedScene" uid="uid://cc3jb5ut7mk8n" path="res://upgrade_ui.tscn" id="17_udxuc"]
 [ext_resource type="Texture2D" uid="uid://db68hut42xhfb" path="res://assets/long_button.png" id="18_bh8nc"]
@@ -29,6 +30,7 @@
 [ext_resource type="Script" uid="uid://bxk5ehbeumag2" path="res://bgm.gd" id="20_wukud"]
 [ext_resource type="Texture2D" uid="uid://dov0qovxt3eot" path="res://assets/button.png" id="21_w44yn"]
 [ext_resource type="PackedScene" uid="uid://vycqckdewdyq" path="res://settings.tscn" id="22_6ah6f"]
+[ext_resource type="Script" uid="uid://cpbly70owaxe3" path="res://tutorial.gd" id="23_bh8nc"]
 [ext_resource type="PackedScene" uid="uid://d30h0iltyusqr" path="res://red_bullet.tscn" id="30_qktwf"]
 
 [sub_resource type="Shader" id="Shader_lquwl"]
@@ -118,6 +120,15 @@ shader_parameter/noise = SubResource("NoiseTexture2D_k3n1d")
 font = ExtResource("11_bc84e")
 font_size = 23
 
+[sub_resource type="LabelSettings" id="LabelSettings_e57ba"]
+font = ExtResource("11_bc84e")
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_jjr1n"]
+font = ExtResource("11_bc84e")
+font_size = 30
+font_color = Color(0.78431374, 0.78431374, 0.78431374, 1)
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_bi6wa"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e57ba"]
@@ -141,10 +152,6 @@ font_size = 40
 [sub_resource type="LabelSettings" id="LabelSettings_my276"]
 font = ExtResource("20_gggvi")
 font_size = 34
-
-[sub_resource type="Environment" id="Environment_iey6n"]
-background_mode = 3
-glow_enabled = true
 
 [node name="World" type="Node2D" unique_id=1777072767 groups=["World"]]
 script = ExtResource("1_dwbse")
@@ -307,6 +314,54 @@ offset_bottom = 685.0
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
+[node name="Tutorial" type="Control" parent="UI" unique_id=1074374796]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("23_bh8nc")
+
+[node name="Label" type="Label" parent="UI/Tutorial" unique_id=803136268]
+layout_mode = 0
+offset_left = -277.0
+offset_top = 501.0
+offset_right = 1483.0
+offset_bottom = 548.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+label_settings = SubResource("LabelSettings_e57ba")
+horizontal_alignment = 1
+
+[node name="Space" type="Label" parent="UI/Tutorial" unique_id=372589302]
+visible = false
+layout_mode = 0
+offset_left = 821.0
+offset_top = 558.0
+offset_right = 1377.0
+offset_bottom = 638.0
+text = "Space로 넘어가기"
+label_settings = SubResource("LabelSettings_jjr1n")
+
+[node name="ColorRect" type="ColorRect" parent="UI/Tutorial" unique_id=2089237965]
+visible = false
+layout_mode = 0
+offset_left = 207.0
+offset_top = 468.0
+offset_right = 963.0
+offset_bottom = 570.0
+color = Color(0, 0, 0, 0)
+
+[node name="Arrow" type="TextureRect" parent="UI/Tutorial" unique_id=897292861]
+visible = false
+material = SubResource("ShaderMaterial_k3n1d")
+layout_mode = 0
+offset_left = 276.0
+offset_top = 146.0
+offset_right = 396.0
+offset_bottom = 226.0
+texture = ExtResource("17_jjr1n")
+
 [node name="Menu" type="TextureRect" parent="UI" unique_id=1309041462]
 process_mode = 3
 visible = false
@@ -442,10 +497,7 @@ visible = false
 
 [node name="RedBullet" parent="." unique_id=15880832 instance=ExtResource("30_qktwf")]
 modulate = Color(18.892157, 18.892157, 18.892157, 1)
-position = Vector2(687, 1201)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1253256367]
-environment = SubResource("Environment_iey6n")
+position = Vector2(655, 1201)
 
 [connection signal="exp_changed" from="." to="UI" method="_on_world_exp_changed"]
 [connection signal="level_up" from="." to="UpgradeManager" method="trigger_level_up"]

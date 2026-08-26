@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c4ls3f03rsoob" path="res://assets/shield.png" id="3_dmnlx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iey6n"]
-size = Vector2(45, 104)
+size = Vector2(34.5, 104)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_il2jm"]
 
@@ -17,11 +17,12 @@ point_count = 2
 script = ExtResource("1_vuocu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1825602379]
+position = Vector2(0.25, 0)
 shape = SubResource("RectangleShape2D_iey6n")
 disabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1550173155]
-position = Vector2(16, 0)
+position = Vector2(11, 0)
 polygon = PackedVector2Array(-6, -47, 6, -47, 6, 47, -6, 47)
 
 [node name="Reflect" type="AudioStreamPlayer" parent="." unique_id=1361972433]

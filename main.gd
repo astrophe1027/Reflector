@@ -130,8 +130,11 @@ func _on_button_2_pressed() -> void:
 	.set_trans(Tween.TRANS_QUAD)\
 	.set_ease(Tween.EASE_IN)
 	tween.finished.connect(func():
-		get_tree().change_scene_to_file.call_deferred("res://tutorial.tscn")
+		pass
 		)
+	await get_tree().create_timer(1).timeout
+	Global.tutorial()
+
 
 
 func _on_credit_back_pressed() -> void:

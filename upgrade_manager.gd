@@ -43,7 +43,7 @@ func _ready() -> void:
 		modifiers.speed *= 1.4
 		modifiers.shield_max *= 2.4
 		modifiers.shield_regen *= 3
-		if !Global.is_saved:
+		if !Global.is_saved && !Global.world.tutorial:
 			await get_tree().create_timer(0.01).timeout
 			trigger_level_up()
 	else:

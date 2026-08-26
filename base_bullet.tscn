@@ -34,7 +34,6 @@ scale_amount_curve = SubResource("Curve_h1bej")
 color = Color(1, 1, 1, 0.7019608)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=434201512]
-visible = false
 rect = Rect2(-100, -100, 200, 200)
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1584925554]

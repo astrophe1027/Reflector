@@ -26,6 +26,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func tutorial() -> void:
+	Global.is_saved = false
+	Global.is_retry = false
+	world = null
+	var map = world_scene.instantiate()
+	map.easy_mode = true
+	map.tutorial = true
+	get_tree().change_scene_to_node(map)
+
 func start(difficulty: int, short:bool, endless:bool) -> void:
 	Global.is_saved = false
 	Global.is_retry = false

@@ -11,6 +11,8 @@ var hard_mode:bool = false
 var short_mode:bool = false
 var endless_mode:bool = false
 
+var tutorial:bool = false
+
 var score:int = 0
 
 var player_level = 1
@@ -49,6 +51,7 @@ func _init() -> void:
 		hard_mode = Global.retry_save.hard_mode
 		short_mode = Global.retry_save.short_mode
 		endless_mode = Global.retry_save.endless_mode
+		tutorial = Global.retry_save.tutorial
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	get_tree().paused = false
@@ -62,7 +65,14 @@ func _ready() -> void:
 		hard_mode = Global.save.hard_mode
 		short_mode = Global.save.short_mode
 		endless_mode = Global.save.endless_mode
+		tutorial = Global.retry_save.tutorial
 		exp_changed.emit()
+	if tutorial:
+		start_tutorial()
+func start_tutorial() -> void:
+	$EnemySpawnTimer.autostart = false
+	$EnemySpawnTimer.stop()
+	$UI/Tutorial.tutorial()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -25,20 +25,6 @@ animations = [{
 "loop": 1,
 "name": &"default",
 "speed": 4.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_dclt4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_naps7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_4lrpy")
-}],
-"loop": 1,
-"name": &"hitted",
-"speed": 5.0
 }]
 
 [node name="GreenEnemy" unique_id=167456077 instance=ExtResource("1_rn0dr")]
@@ -55,4 +41,3 @@ color = Color(0, 1, 0, 1)
 scale = Vector2(1.08, 1.08)
 sprite_frames = SubResource("SpriteFrames_dclt4")
 autoplay = "default"
-frame_progress = 0.16264339

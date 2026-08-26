@@ -84,7 +84,7 @@ func _physics_process(delta: float) -> void:
 					$CollisionShape2D.set_deferred("disabled", false)
 				velocity = velocity.normalized()
 				global_rotation = velocity.angle()
-				global_position = get_parent().global_position + velocity*55
+				global_position = get_parent().global_position + velocity*58
 		else:
 			current_gauge += regen_rate * 1.0/60.0
 			if current_gauge >= max_gauge:

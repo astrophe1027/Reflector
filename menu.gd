@@ -38,7 +38,8 @@ func _on_retry_pressed() -> void:
 		"easy_mode": Global.world.easy_mode,
 		"hard_mode": Global.world.hard_mode,
 		"short_mode": Global.world.short_mode,
-		"endless_mode": Global.world.endless_mode
+		"endless_mode": Global.world.endless_mode,
+		"tutorial": Global.world.tutorial
 	}
 	Global.is_retry = true
 	if get_tree().paused && visible:

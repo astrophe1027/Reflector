@@ -9,7 +9,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7u1gn"]
 radius = 18.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_midf1"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkmlx"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -37,11 +37,11 @@ color = Color(1, 0, 0, 1)
 [node name="AnimatedSprite2D" parent="." index="4" unique_id=1826635805]
 position = Vector2(-1.0000001, 0)
 scale = Vector2(0.875, 0.875)
-sprite_frames = SubResource("SpriteFrames_midf1")
+sprite_frames = SubResource("SpriteFrames_wkmlx")
 autoplay = "default"
 frame_progress = 0.8041334
 
-[node name="Fire" parent="." index="5" unique_id=164904223]
+[node name="Fire" parent="." index="6" unique_id=164904223]
 stream = ExtResource("5_wkmlx")
 volume_db = -10.0
 pitch_scale = 0.8
