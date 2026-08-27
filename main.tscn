@@ -110,11 +110,11 @@ metadata/_edit_lock_ = true
 
 [node name="Version" type="Label" parent="." unique_id=1783582265]
 layout_mode = 0
-offset_left = 913.0
+offset_left = 928.0
 offset_top = 11.0
-offset_right = 1143.0
+offset_right = 1158.0
 offset_bottom = 39.0
-text = "made by someone"
+text = "made by Lemon"
 label_settings = SubResource("LabelSettings_cegan")
 
 [node name="Label" type="Label" parent="." unique_id=951979994]
@@ -430,18 +430,16 @@ offset_top = 556.0
 offset_right = 882.0
 offset_bottom = 614.0
 theme = SubResource("Theme_82xsv")
-current_tab = 1
+current_tab = 0
 tab_alignment = 1
 tab_count = 3
 tab_0/title = "일반 모드"
 tab_0/tooltip = "가장 일반적인 게임입니다."
 tab_0/icon = ExtResource("4_cegan")
-tab_0/disabled = true
 tab_1/title = "숏 모드"
 tab_1/tooltip = "보스 출현 시간이 3분으로 짧아집니다. 체험용으로 적합합니다."
 tab_2/title = "엔들리스 모드"
 tab_2/tooltip = "보스가 출현하지 않습니다."
-tab_2/disabled = true
 
 [node name="Back" type="TextureButton" parent="Select" unique_id=199977303]
 use_parent_material = true

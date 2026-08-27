@@ -164,7 +164,8 @@ offset_right = 656.0
 offset_bottom = 513.0
 text = "플레이어 조작:W, A, S, D
 방패 조작:방향키
-선택:Space"
+선택:Space
+전체화면:F11"
 label_settings = SubResource("LabelSettings_074og")
 
 [connection signal="value_changed" from="Sound/HSlider" to="." method="_on_h_slider_value_changed"]

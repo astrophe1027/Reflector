@@ -1,11 +1,17 @@
 [gd_scene format=3 uid="uid://cc3jb5ut7mk8n"]
 
 [ext_resource type="Script" uid="uid://dyjg10rq5l5ju" path="res://upgrade_ui.gd" id="1_hherc"]
+[ext_resource type="FontFile" uid="uid://b0vdm2vsxydp0" path="res://assets/font/Galmuri11-Bold.ttf" id="2_1gyxb"]
 [ext_resource type="PackedScene" uid="uid://ci864x6cuwjpf" path="res://card.tscn" id="2_1wvqi"]
 [ext_resource type="AudioStream" uid="uid://cn1bqetgbmy82" path="res://assets/sound/revolving_bullet_fire.wav" id="3_1wvqi"]
 [ext_resource type="Shader" uid="uid://6xjdaqp50gdk" path="res://squiggle.gdshader" id="3_6h2i3"]
 [ext_resource type="Texture2D" uid="uid://cb7se6s5tps6b" path="res://assets/reroll_button.png" id="4_1gyxb"]
 [ext_resource type="FontFile" uid="uid://crkl0amgph2ob" path="res://assets/font/esamanru Bold.ttf" id="5_kfjve"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kfjve"]
+font = ExtResource("2_1gyxb")
+font_size = 26
+font_color = Color(0.78431374, 0.78431374, 0.78431374, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_b4rk6"]
 frequency = 0.003
@@ -33,6 +39,15 @@ script = ExtResource("1_hherc")
 offset_right = 1295.0
 offset_bottom = 712.0
 color = Color(0, 0, 0, 0.30588236)
+
+[node name="Press" type="Label" parent="." unique_id=896659743]
+offset_left = 826.0
+offset_top = 566.0
+offset_right = 1382.0
+offset_bottom = 646.0
+text = "A, D, Left, Right로 이동
+Space로 선택"
+label_settings = SubResource("LabelSettings_kfjve")
 
 [node name="Cards" type="Control" parent="." unique_id=1984604399]
 layout_mode = 3
