@@ -308,12 +308,6 @@ offset_bottom = 298.0
 text = "1Lv"
 label_settings = SubResource("LabelSettings_iey6n")
 
-[node name="ColorRect" type="ColorRect" parent="UI" unique_id=1639671812]
-offset_right = 1195.0
-offset_bottom = 685.0
-color = Color(0, 0, 0, 0)
-metadata/_edit_lock_ = true
-
 [node name="Tutorial" type="Control" parent="UI" unique_id=1074374796]
 process_mode = 3
 visible = false
@@ -343,6 +337,16 @@ offset_bottom = 638.0
 text = "Space로 넘어가기"
 label_settings = SubResource("LabelSettings_jjr1n")
 
+[node name="Press" type="Label" parent="UI/Tutorial" unique_id=1338348570]
+visible = false
+layout_mode = 0
+offset_left = 780.0
+offset_top = 558.0
+offset_right = 1336.0
+offset_bottom = 638.0
+text = "모두 한번씩 눌러 넘어가기"
+label_settings = SubResource("LabelSettings_jjr1n")
+
 [node name="ColorRect" type="ColorRect" parent="UI/Tutorial" unique_id=2089237965]
 visible = false
 layout_mode = 0
@@ -361,6 +365,12 @@ offset_top = 146.0
 offset_right = 396.0
 offset_bottom = 226.0
 texture = ExtResource("17_jjr1n")
+
+[node name="ColorRect" type="ColorRect" parent="UI" unique_id=1639671812]
+offset_right = 1195.0
+offset_bottom = 685.0
+color = Color(0, 0, 0, 0)
+metadata/_edit_lock_ = true
 
 [node name="Menu" type="TextureRect" parent="UI" unique_id=1309041462]
 process_mode = 3

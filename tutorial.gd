@@ -7,6 +7,9 @@ var pink_enemy : PackedScene = preload("res://pink_enemy.tscn")
 var yellow_enemy : PackedScene = preload("res://yellow_enemy.tscn")
 var final_boss : PackedScene = preload("res://final_boss.tscn")
 signal input_received(action_name: StringName)
+
+var text_skip:bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -20,15 +23,38 @@ func spawn(enemy_scene:PackedScene, angle:float) -> void:
 	Global.world.add_child(enemy)
 	var spawn_position : Vector2 = Global.player.global_position + Vector2.from_angle(angle*(lerp(-0.2, 0.2, randf())+1)).normalized()*650
 	enemy.global_position = spawn_position
-func show_text(text:String) -> void:
+func show_text(text: String) -> void:
 	$Label.text = ""
+	var skip: bool = false
+	
 	for char in text:
-		$Label.text = $Label.text + char
-		if char == " ":
-			await get_tree().create_timer(0.17, false, true).timeout
-		else:
-			await get_tree().create_timer(0.06, false, true).timeout
-	await get_tree().create_timer(1.1, false, true).timeout
+		$Label.text += char
+		var wait_time: float = 0.17 if char == " " else 0.06
+		var timer: float = 0.0
+		
+		# 설정한 대기 시간 동안 매 프레임 입력 체크
+		while timer < wait_time:
+			if Input.is_action_just_pressed("select"):
+				skip = true
+				break
+			
+			if not is_inside_tree():
+				return
+				
+			await get_tree().process_frame
+			timer += get_process_delta_time()
+		
+		if skip:
+			break
+			
+	if not is_inside_tree():
+		return
+	# 스킵된 경우 전체 텍스트 즉시 표시
+	if skip:
+		$Label.text = text
+		await get_tree().create_timer(0.5, false, true).timeout
+	else:
+		await get_tree().create_timer(1.1, false, true).timeout
 	
 func _input(event: InputEvent) -> void:
 	# 등록된 Input Map 액션 중 방금 눌린 것이 있는지 확인
@@ -49,21 +75,22 @@ func wait_for_all_inputs(action_names: Array[StringName]) -> void:
 		if remaining.has(pressed_action):
 			remaining.erase(pressed_action)
 			print("확인된 액션: ", pressed_action, " (남은 수: ", remaining.size(), ")")
-			
+	await get_tree().create_timer(0.1, false, true).timeout
 func wait_for_next_wave() -> void:
-	var enemies = get_tree().get_nodes_in_group("Enemy")
-	if enemies.is_empty():
-		await get_tree().create_timer(1).timeout
-		return
-	while true:
-		if is_inside_tree():
-			var current_enemies = get_tree().get_nodes_in_group("Enemy")
-			if current_enemies.is_empty():
-				await get_tree().create_timer(1).timeout
-				break
-			await current_enemies[0].tree_exited
-		else:
+	if is_inside_tree():
+		var enemies = get_tree().get_nodes_in_group("Enemy")
+		if enemies.is_empty():
+			await get_tree().create_timer(1).timeout
 			return
+		while true:
+			if is_inside_tree():
+				var current_enemies = get_tree().get_nodes_in_group("Enemy")
+				if current_enemies.is_empty():
+					await get_tree().create_timer(1).timeout
+					break
+				await current_enemies[0].tree_exited
+			else:
+				return
 			
 func tutorial() -> void:
 	await get_tree().create_timer(1.0, false, true).timeout
@@ -80,10 +107,14 @@ func tutorial() -> void:
 	await wait_for_all_inputs(["select"])
 	$Space.hide()
 	await show_text("WASD를 이용해 상하좌우로 움직일 수 있습니다.")
+	$Press.show()
 	await wait_for_all_inputs(["move_up", "move_down", "move_left", "move_right"])
+	$Press.hide()
 	await show_text("좋습니다.")
 	await show_text("방향키를 이용해 원하는 방향으로 방패를 들 수 있습니다.")
+	$Press.show()
 	await wait_for_all_inputs(["shield_up", "shield_down", "shield_left", "shield_right"])
+	$Press.hide()
 	$Arrow.show()
 	await show_text("방패에는 게이지가 존재합니다. \n잔량에 따라 방패 색도 바뀝니다.")
 	await get_tree().create_timer(0.3, false, true).timeout
@@ -104,6 +135,7 @@ func tutorial() -> void:
 	$Arrow.hide()
 	await show_text("경험치를 모으면 업그레이드를 선택할 수 있게 됩니다.")
 	Global.world._level_up()
+	await get_tree().create_timer(0.5, false, true).timeout
 	await show_text("새로운 업그레이드는 마음에 드시나요?")
 	$Space.show()
 	await wait_for_all_inputs(["select"])
@@ -132,10 +164,11 @@ func tutorial() -> void:
 	await wait_for_next_wave()
 	spawn(yellow_enemy, 0)
 	await wait_for_next_wave()
-	await show_text("환상적이군요.")
+	await show_text("아주 잘하셨습니다.")
 	await show_text("이제 튜토리얼은 끝났습니다.")
 	await show_text("가서 마음껏 즐기시면 됩니다.")
-	Global.world.game_clear()
+	if is_inside_tree():
+		Global.world.game_clear()
 
 
 	
