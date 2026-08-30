@@ -8,7 +8,9 @@ var yellow_enemy : PackedScene = preload("res://yellow_enemy.tscn")
 var final_boss : PackedScene = preload("res://final_boss.tscn")
 signal input_received(action_name: StringName)
 
-var text_skip:bool = false
+@onready var actions : Array[StringName] = InputMap.get_actions()
+var waiting_for_action:bool = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,7 +19,13 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if not waiting_for_action:
+		return
+		
+	# 프레임당 단 한 번만 등록된 액션들을 검사
+	for action in actions:
+		if Input.is_action_just_pressed(action):
+			input_received.emit(action)
 func spawn(enemy_scene:PackedScene, angle:float) -> void:
 	var enemy : BaseEnemy = enemy_scene.instantiate()
 	Global.world.add_child(enemy)
@@ -55,14 +63,9 @@ func show_text(text: String) -> void:
 		await get_tree().create_timer(0.5, false, true).timeout
 	else:
 		await get_tree().create_timer(1.1, false, true).timeout
-	
-func _input(event: InputEvent) -> void:
-	# 등록된 Input Map 액션 중 방금 눌린 것이 있는지 확인
-	for action in InputMap.get_actions():
-		if event.is_action_pressed(action) and not event.is_echo():
-			input_received.emit(action)
 			
 func wait_for_all_inputs(action_names: Array[StringName]) -> void:
+	waiting_for_action = true
 	# 중복을 제거한 액션 목록 생성
 	var remaining: Dictionary = {}
 	for action in action_names:
@@ -76,6 +79,7 @@ func wait_for_all_inputs(action_names: Array[StringName]) -> void:
 			remaining.erase(pressed_action)
 			print("확인된 액션: ", pressed_action, " (남은 수: ", remaining.size(), ")")
 	await get_tree().create_timer(0.1, false, true).timeout
+	waiting_for_action = false
 func wait_for_next_wave() -> void:
 	if is_inside_tree():
 		var enemies = get_tree().get_nodes_in_group("Enemy")

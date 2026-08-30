@@ -309,7 +309,6 @@ text = "1Lv"
 label_settings = SubResource("LabelSettings_iey6n")
 
 [node name="Tutorial" type="Control" parent="UI" unique_id=1074374796]
-process_mode = 3
 visible = false
 layout_mode = 3
 anchors_preset = 0

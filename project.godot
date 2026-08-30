@@ -22,10 +22,6 @@ run/max_fps=60
 run/low_processor_mode=true
 config/icon="uid://bbwivbhye5yxd"
 
-[audio]
-
-general/default_playback_type.web=0
-
 [autoload]
 
 Global="*uid://d3ly0ycm0orx1"
